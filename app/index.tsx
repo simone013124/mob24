@@ -1,15 +1,28 @@
-
-import {useEffect, useState} from "react";
-import { Text, View, StyleSheet, ActivityIndicator, FlatList, Image } from "react-native";
-
+import React, { useEffect, useState } from "react";
+import { Text, View, ActivityIndicator, FlatList, Image } from "react-native";
+import styles from '../styles/exercise.js';
 
 const EXERCISES_URL = 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/dist/exercises.json';
 const IMAGE_BASE_URL = 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/dist/exercises/';
 
-const ExerciseComponent = () => {
-    const [exercises, setExercises] = useState([]);
+interface Exercise {
+    id: string;
+    name: string;
+    force: string | null;
+    level: string;
+    mechanic: string | null;
+    equipment: string | null;
+    primaryMuscles: string[];
+    secondaryMuscles: string[];
+    instructions: string[];
+    category: string;
+    images: string[];
+}
+
+const ExerciseComponent: React.FC = () => {
+    const [exercises, setExercises] = useState<Exercise[]>([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<Error | null>(null);
 
     useEffect(() => {
         const fetchExercises = async () => {
@@ -18,14 +31,12 @@ const ExerciseComponent = () => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                const exercisesData = await response.json();
-                const exercisesWithImageUrl = exercisesData.map(exercise => ({
-                    ...exercise,
-                    imageUrl: `${IMAGE_BASE_URL}${exercise.imagePath}`,
-                }));
-                setExercises(exercisesWithImageUrl);
+                const exercisesData: Exercise[] = await response.json();
+                console.log('Fetched exercises:', exercisesData);
+                setExercises(exercisesData);
                 setLoading(false);
             } catch (error) {
+                // @ts-ignore
                 setError(error);
                 setLoading(false);
             }
@@ -51,61 +62,45 @@ const ExerciseComponent = () => {
     }
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.heading}>Exercises</Text>
-            <FlatList
-                data={exercises}
-                keyExtractor={(item) => item.id.toString()}
-                renderItem={({ item }) => (
-                    <View style={styles.exerciseContainer}>
-                        <Text style={styles.exerciseName}>{item.name}</Text>
-                        <Text>Type: {item.type}</Text>
-                        <Image source={{ uri: item.imageUrl }} style={styles.exerciseImage} />
+        <FlatList
+            data={exercises}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+                <View style={styles.exerciseContainer}>
+                    <Text style={styles.exerciseName}>{item.name}</Text>
+                    <Text style={styles.exerciseDetailLabel}>Force: <Text style={styles.exerciseDetail}>{item.force}</Text></Text>
+                    <Text style={styles.exerciseDetailLabel}>Level: <Text style={styles.exerciseDetail}>{item.level}</Text></Text>
+                    <Text style={styles.exerciseDetailLabel}>Mechanic: <Text style={styles.exerciseDetail}>{item.mechanic}</Text></Text>
+                    <Text style={styles.exerciseDetailLabel}>Equipment: <Text style={styles.exerciseDetail}>{item.equipment}</Text></Text>
+                    <Text style={styles.exerciseDetailLabel}>Category: <Text style={styles.exerciseDetail}>{item.category}</Text></Text>
+                    <Text style={styles.exerciseDetailLabel}>Primary Muscles: <Text style={styles.exerciseDetail}>{item.primaryMuscles.join(', ')}</Text></Text>
+                    <Text style={styles.exerciseDetailLabel}>Secondary Muscles: <Text style={styles.exerciseDetail}>{item.secondaryMuscles.join(', ')}</Text></Text>
+
+                    <View style={styles.instructionsContainer}>
+                        <Text style={styles.instructionsTitle}>Instructions:</Text>
+                        {item.instructions.map((instruction, index) => (
+                            <Text key={index} style={styles.instructionText}>{instruction}</Text>
+                        ))}
                     </View>
-                )}
-            />
+
+
+                        <Image
+                            source={require('../assets/images/superman.png')} // Hier Pfad zum Standardbild angeben
+                            style={styles.exerciseImage}
+                        />
+                </View>
+            )}
+        />
+    );
+};
+
+const Index: React.FC = () => {
+    return (
+        <View style={{ flex: 1 }}>
+            <Text style={styles.heading}>Hello JOSICA.</Text>
+            <ExerciseComponent />
         </View>
     );
 };
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        paddingHorizontal: 20,
-        paddingTop: 40,
-    },
-    center: {
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    heading: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginBottom: 10,
-    },
-    exerciseContainer: {
-        marginBottom: 20,
-    },
-    exerciseName: {
-        fontSize: 18,
-        fontWeight: 'bold',
-    },
-    exerciseImage: {
-        width: '100%',
-        height: 200,
-        marginTop: 10,
-        resizeMode: 'cover',
-    },
-});
-
-export default ExerciseComponent;
-
-export default function Index() {
-    return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Hello JOSICA.</Text>
-            <ExerciseComponent />
-        </View>
-    );
-}
-
+export default Index;
