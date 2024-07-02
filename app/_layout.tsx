@@ -2,7 +2,9 @@ import { SplashScreen, Tabs } from "expo-router";
 import { useFonts } from "expo-font";
 import { useEffect } from "react";
 import { FontAwesome } from "@expo/vector-icons";
+import { SimpleLineIcons } from '@expo/vector-icons';
 import { LikedWorkoutsProvider } from '../context/LikedWorkoutsContext';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -68,6 +70,18 @@ function TabsLayout() {
                 tabBarIcon: ({ color }) => <FontAwesome size={28} name="heart" color={color} />
             }} />
 
-        </Tabs>
+            <Tabs.Screen name="about" options={{
+                headerTitle: "About us",
+                title: "about",
+                tabBarIcon: ({ color }) => <SimpleLineIcons name="info" size={24} color="grey" />
+
+            }} />
+
+            <Tabs.Screen name="tips" options={{
+                headerTitle: "tips",
+                title: "tips",
+                tabBarIcon: ({ color }) => <MaterialCommunityIcons name="lightbulb-on" size={24} color="grey" />
+            }} />
+            </Tabs>
     );
 }
