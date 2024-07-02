@@ -9,5 +9,5 @@ export interface Exercise {
     secondaryMuscles: string[];
     instructions: string[];
     category: string;
-    images: string[];
+    imageUrl: string;
 }

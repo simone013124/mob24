@@ -7,7 +7,7 @@ const Index: React.FC = () => {
     return (
         <View style={{ flex: 1 }}>
             <Text style={{ fontSize: 24, textAlign: 'center', margin: 20 }}>Hello JOSICA</Text>
-
+            <ExerciseComponent></ExerciseComponent>
         </View>
     );
 };

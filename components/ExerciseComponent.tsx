@@ -5,7 +5,8 @@ import { Exercise } from '../types/exercise';
 import { fetchExercises } from '../api/exerciseapi.ts';
 import { useLikedWorkouts } from '../context/LikedWorkoutsContext';
 
-const IMAGE_BASE_URL = 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/dist/exercises/';
+const IMAGE_BASE_URL = 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/';
+
 
 const ExerciseComponent: React.FC = () => {
     const [exercises, setExercises] = useState<Exercise[]>([]);
@@ -66,10 +67,13 @@ const ExerciseComponent: React.FC = () => {
                         ))}
                     </View>
 
-                    <Image
-                        source={require('../assets/images/superman.png')}
-                        style={styles.exerciseImage}
-                    />
+                    {item.images && item.images.length > 0 && (
+                        <Image
+                            source={{ uri: `${IMAGE_BASE_URL}${item.images[0]}` }}
+                            style={[styles.exerciseImage, { width: 200, height: 200 }]} // Beispiel für festgelegte Breite und Höhe
+                            onLoad={() => console.log('Image loaded:', `${IMAGE_BASE_URL}${item.images[0]}`)}
+                        />
+                    )}
 
                     <Button
                         title={likedWorkouts.some(w => w.id === item.id) ? 'Unlike' : 'Like'}
@@ -82,4 +86,5 @@ const ExerciseComponent: React.FC = () => {
         />
     );
 };
+
 export default ExerciseComponent;
