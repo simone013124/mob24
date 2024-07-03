@@ -1,8 +1,11 @@
 // components/LikedWorkouts.tsx
-import React, { useContext } from 'react';
-import { View, Text, FlatList, Image } from 'react-native';
+import React, {useContext, useState} from 'react';
+import {View, Text, FlatList, Image, StyleSheet} from 'react-native';
 import { LikedWorkoutsContext } from '../context/LikedWorkoutsContext';
 import styles from '../styles/exercise';
+import {MaterialIcons} from "@expo/vector-icons";
+import {Category} from "@/app/(exercisetype)";
+
 
 
 const Saved: React.FC = () => {
@@ -12,6 +15,7 @@ const Saved: React.FC = () => {
         return (
             <View style={[styles.container, styles.center]}>
                 <Text>No liked workouts.</Text>
+
             </View>
         );
     }
@@ -25,8 +29,15 @@ const Saved: React.FC = () => {
                     <Text style={styles.exerciseName}>{item.name}</Text>
                 </View>
             )}
+
         />
     );
 };
 
+
+
 export default Saved;
+
+
+
+

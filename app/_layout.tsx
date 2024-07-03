@@ -40,14 +40,14 @@ function TabsLayout() {
     return (
         <Tabs screenOptions={{
             headerStyle: {
-                backgroundColor: '#0E6c6c',
+                backgroundColor: '#2961bb',
             },
             headerTintColor: '#fff',
             headerTitleStyle: {
                 fontWeight: 'bold',
             },
-            tabBarActiveTintColor: 'tomato',
-            tabBarInactiveTintColor: 'gray',
+            tabBarActiveTintColor: '#2961bb',
+            tabBarInactiveTintColor: 'black',
         }}
         >
 

@@ -1,43 +1,24 @@
-import {
-    StyleSheet,
-    View,
-    Text,
-    Pressable,
-    FlatList,
-    TouchableOpacity,
-    Modal,
-    TouchableWithoutFeedback,
-    Keyboard
-} from 'react-native';
+import {StyleSheet, View, Text, Pressable, FlatList, TouchableOpacity, Modal, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import {router} from "expo-router";
 import {useState} from "react";
 import {MaterialIcons} from "@expo/vector-icons";
 import Card from '../../components/card';
 
 
-export type Review = {
+export type Category = {
     title: string,
-    rating: number,
-    body: string,
     key: string
 }
 
-export default function HomePage() {
+export default function ExercisePage() {
     const [modalOpen, setModalOpen] = useState(false);
-    const [reviews, setReviews] = useState<Review[]>([
-        { title: 'Beginner', rating: 5, body: 'lorem ipsum', key: '1' },
-        { title: 'Intermediate', rating: 5, body: 'lorem ipsum', key: '1' },
-        { title: 'Pro', rating: 5, body: 'lorem ipsum', key: '1' },
+    const [reviews, setReviews] = useState<Category[]>([
+        { title: 'Beginner', key: '1' },
+        { title: 'Intermediate', key: '2' },
+        { title: 'Pro', key: '3' },
 
     ]);
 
-    const addReview = (review:Review) => {
-        review.key = Math.random().toString();
-        setReviews((currentReviews) => {
-            return [review, ...currentReviews];
-        });
-        setModalOpen(false);
-    };
 
     return (
         <View>
@@ -55,12 +36,7 @@ export default function HomePage() {
             </Modal>
 
 
-            <MaterialIcons
-                name='add'
-                size={24}
-                style={styles.modalToggle}
-                onPress={() => setModalOpen(true)}
-            />
+
 
             <FlatList data={reviews} renderItem={({ item }) => (
                 <TouchableOpacity onPress={() => router.push({pathname:item.key, params:item})}>
