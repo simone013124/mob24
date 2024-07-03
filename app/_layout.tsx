@@ -39,13 +39,7 @@ export default function RootLayout() {
 function TabsLayout() {
     return (
         <Tabs screenOptions={{
-            headerStyle: {
-                backgroundColor: '#2961bb',
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-                fontWeight: 'bold',
-            },
+
             tabBarActiveTintColor: '#2961bb',
             tabBarInactiveTintColor: 'black',
         }}
@@ -54,6 +48,7 @@ function TabsLayout() {
             <Tabs.Screen name="index" options={{
                 headerTitle: "Home",
                 title: "Home",
+                headerShown: false,
                 tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />
             }} />
 

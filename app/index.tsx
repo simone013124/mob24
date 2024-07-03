@@ -1,16 +1,33 @@
-// index.tsx
+import React from 'react';
+import { StyleSheet, View, Text, ImageBackground } from 'react-native';
 
-import { View, Text } from 'react-native';
-import ExerciseComponent from "@/components/ExerciseComponent";
-
-const Index: React.FC = () => {
+export default function HomeScreen() {
     return (
-        <View style={{ flex: 1 }}>
-            <Text style={{ fontSize: 24, textAlign: 'left', margin: 20 }}>Hello Johannes!</Text>
-
-
-        </View>
+        <ImageBackground source={require('../assets/images/fitness.jpg')} style={styles.backgroundImage}>
+            <View style={styles.container}>
+                <Text style={styles.title}>Welcome, Johannes!</Text>
+                {/* Rest of your content */}
+            </View>
+        </ImageBackground>
     );
-};
+}
 
-export default Index;
+const styles = StyleSheet.create({
+    backgroundImage: {
+        width: '100%',
+        height: '60%',
+        justifyContent: 'center'
+    },
+    container: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+
+    },
+    title: {
+        margin: 32,
+        fontSize: 24,
+        color: '#fff',
+        fontWeight: 'bold',
+    },
+});
