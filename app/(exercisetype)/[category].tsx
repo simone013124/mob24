@@ -1,16 +1,21 @@
 import { StyleSheet, View, Text, Image } from 'react-native';
 import {useLocalSearchParams} from "expo-router";
 import Card from "../../components/card";
+import ExerciseComponent from "@/components/ExerciseComponent";
 
-export default function ReviewDetail() {
+
+export default function CategoryDetail() {
     let item= useLocalSearchParams();
 
     return (
         <Card>
+
             <Text>{item.title }</Text>
             <Text>{item.body }</Text>
             <View style={styles.rating}>
-                <Text>Rating:</Text>
+                <Text>fuuu</Text>
+                <ExerciseComponent level={item.title} />
+
             </View>
         </Card>
     );

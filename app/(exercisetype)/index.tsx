@@ -13,9 +13,9 @@ export type Category = {
 export default function ExercisePage() {
     const [modalOpen, setModalOpen] = useState(false);
     const [reviews, setReviews] = useState<Category[]>([
-        { title: 'Beginner', key: '1' },
-        { title: 'Intermediate', key: '2' },
-        { title: 'Pro', key: '3' },
+        { title: 'beginner', key: '1' },
+        { title: 'intermediate', key: '2' },
+        { title: 'expert', key: '3' },
 
     ]);
 
