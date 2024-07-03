@@ -4,23 +4,23 @@ export default function ExerciseLayout () {
     return (
         <Stack screenOptions={{
             headerStyle: {
-                backgroundColor: '#f4511e',
+                backgroundColor: '#d19dda',
             },
             headerTintColor: '#fff',
             headerTitleStyle: {
-                fontWeight: 'bold',
+                fontWeight: '',
             },
         }}
         >
             <Stack.Screen name="index" options={{
-                headerTitle: "Kategorien",
-                title: "Hier die Kategorien"
+                headerTitle: "Categories",
+
             }}/>
 
 
             <Stack.Screen name="[category]" options={{
                 headerTitle: "Category Details",
-                title: "Category Details" }} />
+            }} />
 
         </Stack>
     )

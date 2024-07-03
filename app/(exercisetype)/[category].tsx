@@ -2,8 +2,7 @@ import { StyleSheet, View, Text, Image } from 'react-native';
 import {useLocalSearchParams} from "expo-router";
 import Card from "../../components/card";
 
-
-export default function CategoryDetail() {
+export default function ReviewDetail() {
     let item= useLocalSearchParams();
 
     return (
@@ -11,7 +10,7 @@ export default function CategoryDetail() {
             <Text>{item.title }</Text>
             <Text>{item.body }</Text>
             <View style={styles.rating}>
-                <Text>fuuu</Text>
+                <Text>Rating:</Text>
             </View>
         </Card>
     );

@@ -14,7 +14,7 @@ const ExerciseDetail: React.FC<ExerciseDetailProps> = ({ exercise, onBack }) => 
         <View style={styles.container}>
             <Text style={styles.exerciseName}>{exercise.name}</Text>
             <Image
-                source={{ uri: `${IMAGE_BASE_URL}${exercise.images[0]}` }}
+                source={{ uri: `${IMAGE_BASE_URL}${exercise.imageUrl}` }}
                 style={styles.exerciseImage}
             />
             <Text style={styles.exerciseDetailLabel}>Force: {exercise.force}</Text>

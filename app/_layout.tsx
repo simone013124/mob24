@@ -65,7 +65,7 @@ function TabsLayout() {
 
 
             <Tabs.Screen name="(exercisetype)" options={{
-                headerTitle: "what se fuck",
+                headerTitle: "Browse",
                 title: "exercise",
                 tabBarIcon: ({ color }) => <FontAwesome size={28} name="heart" color={color} />
             }} />
