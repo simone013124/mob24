@@ -6,9 +6,11 @@ export default function ExerciseLayout () {
             headerStyle: {
                 backgroundColor: '#d19dd1',
             },
+            headerTitleAlign: 'center',
             headerTintColor: '#fff',
             headerTitleStyle: {
-                fontWeight: '',
+                fontWeight: 'bold',
+                fontSize: 24,
             },
         }}
         >

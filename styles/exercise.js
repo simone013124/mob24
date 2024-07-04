@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		paddingHorizontal: 20,
 		paddingTop: 40,
-		backgroundColor: '#F5F5F5',
+
 	},
 	center: {
 		justifyContent: 'center',
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
 	},
 	exerciseContainer: {
 		marginBottom: 20,
-		backgroundColor: '#FFFFFF',
+		backgroundColor: 'rgba(255,255,255,0.51)',
 		padding: 15,
 		borderRadius: 10,
 		shadowColor: '#000',
@@ -38,12 +38,13 @@ const styles = StyleSheet.create({
 	exerciseName: {
 		fontSize: 20,
 		fontWeight: 'bold',
-		color: '#FFC1C1',
+		color: '#772877',
+		padding: 5,
 	},
 	exerciseDetailLabel: {
 		fontSize: 16,
 		fontWeight: 'bold',
-		color: '#cd6889',
+		color: '#772877',
 		padding: 5,
 	},
 	exerciseDetail: {

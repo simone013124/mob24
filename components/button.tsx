@@ -16,9 +16,9 @@ export default function FlatButton(props:FlatButtonProps){
 
 const styles = StyleSheet.create({
     button: {
-        backgroundColor: '#FFC1C1',
+        backgroundColor: '#6200EE',
         padding: 10,
-        borderRadius: 5,
+        borderRadius: 25,
         marginTop: 10,
         marginBottom: 10,
     },

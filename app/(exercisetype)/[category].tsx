@@ -16,7 +16,7 @@ export default function CategoryDetail(props) {
     return (
         <ScrollView>
             <Card>
-                <Text>{item.title}</Text>
+                <Text style={styles.text}>{item.title}</Text>
                 <View style={styles.rating}>
                     <ExerciseComponent level={item.title} />
                 </View>
@@ -35,14 +35,6 @@ const styles = StyleSheet.create({
         borderTopWidth: 1,
         borderTopColor: '#eee',
     },
-    input: {
-        borderWidth: 1,
-        borderColor: '#ddd',
-        padding: 10,
-        fontSize: 18,
-        borderRadius: 6,
-        marginVertical: 10,
-    },
     errorText: {
         color: 'red',
         fontSize: 12,
@@ -56,5 +48,7 @@ const styles = StyleSheet.create({
 
     text:{
         fontSize: 20,
+        textAlign: 'center',
+        textTransform: 'uppercase',
     }
 });

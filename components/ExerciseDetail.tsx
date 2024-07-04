@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
-        backgroundColor: '#fff',
+        backgroundColor: 'transparent',
     },
     exerciseName: {
         fontSize: 24,
@@ -127,6 +127,9 @@ const styles = StyleSheet.create({
 
     text:{
         fontSize: 20,
+        marginTop: 10,
+        fontWeight: 'bold',
+
     },
     input: {
         borderWidth: 1,

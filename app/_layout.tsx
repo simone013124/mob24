@@ -40,10 +40,21 @@ export default function RootLayout() {
 function TabsLayout() {
     return (
         <Tabs screenOptions={{
-
-            tabBarActiveTintColor: '#2961bb',
+            tabBarActiveTintColor: '#d19dd1',
             tabBarInactiveTintColor: 'grey',
+            headerStyle: {
+                backgroundColor: '#d19dd1', // Hintergrundfarbe des Headers
+            },
+            headerTitleAlign: 'center',
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+                fontWeight: 'bold',
+                fontSize: 24,
+            },
         }}
+
+
+
         >
 
             <Tabs.Screen name="index" options={{
@@ -61,7 +72,7 @@ function TabsLayout() {
 
 
             <Tabs.Screen name="(exercisetype)" options={{
-                headerTitle: "Browse",
+                headerShown: false,
                 title: "exercise",
                 tabBarIcon: ({ color }) => <FontAwesome size={28} name="heart" color={color} />
             }} />
@@ -74,7 +85,7 @@ function TabsLayout() {
             }} />
 
             <Tabs.Screen name="tips" options={{
-                headerTitle: "tips",
+                headerTitle: "Tips",
                 title: "tips",
                 tabBarIcon: ({ color }) => <MaterialCommunityIcons name="lightbulb-on" size={24} color="grey" />
             }} />
