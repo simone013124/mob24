@@ -5,6 +5,7 @@ import globalStyles from '../styles/global';
 import {Formik} from "formik";
 import * as Yup from "yup";
 import {useLocalSearchParams} from "expo-router";
+import FlatButton from './button.tsx';
 
 const IMAGE_BASE_URL = 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/';
 
@@ -66,14 +67,14 @@ const ExerciseDetail: React.FC<ExerciseDetailProps> = ({ exercise, onBack }) => 
                         {touched.repetitions && errors.repetitions && (
                             <Text style={styles.errorText}>{errors.repetitions}</Text>
                         )}
-                        <Button onPress={handleSubmit} title="Save" />
+                        <FlatButton onPress={handleSubmit} text="Save" />
                         {repetitions && (
                             <Text style={styles.resultText}>You have completed {repetitions} repetitions. You are a fucking Beast.</Text>
                         )}
                     </View>
                 )}
             </Formik>
-            <Button style={globalStyles.button} title="Back" onPress={onBack} />
+            <FlatButton text="Back" onPress={onBack} />
         </ScrollView>
     );
 };

@@ -16,7 +16,6 @@ export default function ExercisePage() {
         { title: 'beginner', key: '1' },
         { title: 'intermediate', key: '2' },
         { title: 'expert', key: '3' },
-
     ]);
 
 
@@ -41,7 +40,7 @@ export default function ExercisePage() {
             <FlatList data={reviews} renderItem={({ item }) => (
                 <TouchableOpacity onPress={() => router.push({pathname:item.key, params:item})}>
                     <Card>
-                        <Text>{ item.title }</Text>
+                        <Text style={styles.text}>{ item.title }</Text>
                     </Card>
                 </TouchableOpacity>
             )} />
@@ -66,5 +65,12 @@ const styles = StyleSheet.create({
     },
     modalContent: {
         flex: 1,
+    },
+
+    text:{
+        fontSize: 18,
+        fontWeight: 'bold',
+        textDecorationStyle: 'dotted',
     }
+
 });
