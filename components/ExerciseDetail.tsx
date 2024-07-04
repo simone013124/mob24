@@ -23,13 +23,24 @@ const exerciseSchema = Yup.object({
 
 const ExerciseDetail: React.FC<ExerciseDetailProps> = ({ exercise, onBack }) => {
     const [repetitions, setRepetitions] = useState(null);
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const photos = exercise.images;  // Assuming `exercise.images` is an array of image paths
+
+    // Store the first photo
+    const firstPhoto = `${IMAGE_BASE_URL}${photos[0]}`;
+
+
     let item = useLocalSearchParams();
+    console.log(exercise.images);
+    console.log("here i am ");
+    console.log(firstPhoto);
+
 
     return (
         <ScrollView style={styles.container}>
             <Text style={styles.exerciseName}>{exercise.name}</Text>
             <Image
-                source={{ uri: `${IMAGE_BASE_URL}${exercise.imageUrl}` }}
+                source={{ uri: '${firstPhoto}', }}
                 style={styles.exerciseImage}
             />
             <Text style={styles.exerciseDetailLabel}>Force: {exercise.force}</Text>

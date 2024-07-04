@@ -10,4 +10,5 @@ export interface Exercise {
     instructions: string[];
     category: string;
     imageUrl: string;
+    images: string[];
 }
