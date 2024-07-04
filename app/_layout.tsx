@@ -77,6 +77,12 @@ function TabsLayout() {
                 title: "tips",
                 tabBarIcon: ({ color }) => <MaterialCommunityIcons name="lightbulb-on" size={24} color="grey" />
             }} />
+
+            <Tabs.Screen name="myprogress" options={{
+                headerTitle: "myprogress",
+                title: "myprogress",
+                tabBarIcon: ({ color }) => <MaterialCommunityIcons name="lightbulb-on" size={24} color="grey" />
+            }} />
             </Tabs>
     );
 }
