@@ -84,6 +84,15 @@ function TabsLayout() {
                 title: "myprogress",
                 tabBarIcon: ({ color }) => <Entypo name="progress-two" size={24} color="grey" />
             }} />
+
+            <Tabs.Screen name="(savednew)" options={{
+                headerTitle: "Your Saved Exercises",
+                title: "Saved",
+                tabBarIcon: ({ color }) => <FontAwesome size={28} name="save" color={color} />
+            }} />
+
             </Tabs>
+
+
     );
 }

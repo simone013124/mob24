@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Text, View, ActivityIndicator, FlatList, Button } from "react-native";
 import styles from '../styles/exercise';
+import globalStyles from '../styles/global';
 import { Exercise } from '../types/exercise';
 import { fetchExercises } from '../api/exerciseapi';
 import { useLikedWorkouts } from '../context/LikedWorkoutsContext';
 import ExerciseDetail from './ExerciseDetail';
+import FlatButton from './button.tsx';
 
 const IMAGE_BASE_URL = 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/';
 
@@ -67,15 +69,16 @@ const ExerciseComponent: React.FC<ExerciseComponentProps> = ({ level }) => {
                     <Text style={styles.exerciseDetailLabel}>Force: <Text style={styles.exerciseDetail}>{item.force}</Text></Text>
                     <Text style={styles.exerciseDetailLabel}>Level: <Text style={styles.exerciseDetail}>{item.level}</Text></Text>
 
-                    <Button
-                        title={likedWorkouts.some(w => w.id === item.id) ? 'Unlike' : 'Like'}
+                    <FlatButton
+                        text={likedWorkouts.some(w => w.id === item.id) ? 'Unlike' : 'Like'}
                         onPress={() => {
                             likedWorkouts.some(w => w.id === item.id) ? removeLikedWorkout(item) : addLikedWorkout(item)
                         }}
                     />
 
-                    <Button
-                        title="Details"
+                    <FlatButton
+                        style={globalStyles.button}
+                        text="Details"
                         onPress={() => setSelectedExercise(item)}
                     />
                 </View>

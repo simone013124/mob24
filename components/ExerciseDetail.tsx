@@ -1,6 +1,10 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image, Button } from 'react-native';
+import React, {useState} from 'react';
+import { ScrollView, View, Text, StyleSheet, Image, Button, TextInput} from 'react-native';
 import { Exercise } from '../types/exercise';
+import globalStyles from '../styles/global';
+import {Formik} from "formik";
+import * as Yup from "yup";
+import {useLocalSearchParams} from "expo-router";
 
 const IMAGE_BASE_URL = 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/';
 
@@ -9,9 +13,19 @@ interface ExerciseDetailProps {
     onBack: () => void;
 }
 
+const exerciseSchema = Yup.object({
+    repetitions: Yup.number()
+        .required('Bitte die Anzahl der Wiederholungen eingeben.')
+        .min(1, 'Die Wiederholungen müssen mindestens 1 sein.')
+        .integer('Bitte eine ganze Zahl eingeben.')
+});
+
 const ExerciseDetail: React.FC<ExerciseDetailProps> = ({ exercise, onBack }) => {
+    const [repetitions, setRepetitions] = useState(null);
+    let item = useLocalSearchParams();
+
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
             <Text style={styles.exerciseName}>{exercise.name}</Text>
             <Image
                 source={{ uri: `${IMAGE_BASE_URL}${exercise.imageUrl}` }}
@@ -30,8 +44,37 @@ const ExerciseDetail: React.FC<ExerciseDetailProps> = ({ exercise, onBack }) => 
                     <Text key={index} style={styles.instructionText}>{instruction}</Text>
                 ))}
             </View>
-            <Button title="Back" onPress={onBack} />
-        </View>
+
+            <Formik
+                validationSchema={exerciseSchema}
+                initialValues={{ repetitions: '' }}
+                onSubmit={(values, actions) => {
+                    actions.resetForm();
+                    setRepetitions(values.repetitions);
+                }}
+            >
+                {({ handleChange, handleSubmit, values, touched, errors }) => (
+                    <View>
+                        <Text style={styles.text}>Your Repetitions</Text>
+                        <TextInput
+                            style={styles.input}
+                            placeholder='0'
+                            onChangeText={handleChange('repetitions')}
+                            value={values.repetitions.toString()}
+                            keyboardType='numeric'
+                        />
+                        {touched.repetitions && errors.repetitions && (
+                            <Text style={styles.errorText}>{errors.repetitions}</Text>
+                        )}
+                        <Button onPress={handleSubmit} title="Save" />
+                        {repetitions && (
+                            <Text style={styles.resultText}>You have completed {repetitions} repetitions. You are a fucking Beast.</Text>
+                        )}
+                    </View>
+                )}
+            </Formik>
+            <Button style={globalStyles.button} title="Back" onPress={onBack} />
+        </ScrollView>
     );
 };
 
@@ -69,6 +112,29 @@ const styles = StyleSheet.create({
         fontSize: 16,
         marginBottom: 5,
     },
+
+    errorText: {
+        color: 'red',
+        fontSize: 12,
+        marginVertical: 5,
+    },
+    resultText: {
+        fontSize: 18,
+        color: 'green',
+        marginVertical: 10,
+    },
+
+    text:{
+        fontSize: 20,
+    },
+    input: {
+        borderWidth: 1,
+        borderColor: '#ddd',
+        padding: 10,
+        fontSize: 18,
+        borderRadius: 6,
+        marginVertical: 10,
+    }
 });
 
 export default ExerciseDetail;
