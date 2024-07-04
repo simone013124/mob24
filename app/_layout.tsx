@@ -5,6 +5,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { LikedWorkoutsProvider } from '../context/LikedWorkoutsContext';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -41,7 +42,7 @@ function TabsLayout() {
         <Tabs screenOptions={{
 
             tabBarActiveTintColor: '#2961bb',
-            tabBarInactiveTintColor: 'black',
+            tabBarInactiveTintColor: 'grey',
         }}
         >
 
@@ -81,7 +82,7 @@ function TabsLayout() {
             <Tabs.Screen name="myprogress" options={{
                 headerTitle: "myprogress",
                 title: "myprogress",
-                tabBarIcon: ({ color }) => <MaterialCommunityIcons name="lightbulb-on" size={24} color="grey" />
+                tabBarIcon: ({ color }) => <Entypo name="progress-two" size={24} color="grey" />
             }} />
             </Tabs>
     );

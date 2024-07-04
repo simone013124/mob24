@@ -4,7 +4,7 @@ export default function ExerciseLayout () {
     return (
         <Stack screenOptions={{
             headerStyle: {
-                backgroundColor: '#d19dda',
+                backgroundColor: '#d19dd1',
             },
             headerTintColor: '#fff',
             headerTitleStyle: {

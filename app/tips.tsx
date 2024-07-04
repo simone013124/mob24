@@ -1,70 +1,69 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, FlatList, StyleSheet, ImageBackground } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
 
-// Definiere den Typ für die Kategorie-IDs, füge '4' für die neue Kategorie hinzu
+// Define the type for category IDs, add '4' for the new category
 type CategoryId = '1' | '2' | '3' | '4';
 
-const tips: React.FC = () => {
-    // State-Hook zur Verwaltung der ausgewählten Kategorie
+const Tips: React.FC = () => {
     const [selectedCategory, setSelectedCategory] = useState<CategoryId | null>(null);
 
-    // Liste der Kategorien mit IDs, Titeln und Pfaden zu den Hintergrundbildern
     const categories = [
-        { id: '1', title: 'Ernährungstipps', image: require('../assets/images/ernaehrung.png') },
-        { id: '2', title: 'Fitnessstudio-Tipps', image: require('../assets/images/gym.png') },
-        { id: '3', title: 'Motivationstipps', image: require('../assets/images/motivation.png') },
-        { id: '4', title: 'Regeneration und Erholung', image: require('../assets/images/relax.png') }
+        { id: '1', title: 'Nutrition Tips', image: require('../assets/images/ernaehrung.png') },
+        { id: '2', title: 'Gym Tips', image: require('../assets/images/gym.png') },
+        { id: '3', title: 'Motivation Tips', image: require('../assets/images/motivation.png') },
+        { id: '4', title: 'Recovery and Relaxation', image: require('../assets/images/relax.png') }
     ];
 
-    // Datenobjekt mit Tipps, gruppiert nach Kategorie-IDs
     const tipsData: { [key in CategoryId]: string[] } = {
         '1': [
-            'Trinke ausreichend Wasser.',
-            'Iss mehr Protein.',
-            'Vermeide verarbeitete Lebensmittel.',
-            'Plane deine Mahlzeiten im Voraus.',
-            'Esse bunt, um alle notwendigen Nährstoffe zu erhalten.',
-            'Reduziere Zucker, besonders in gesüßten Getränken und Snacks.',
-            'Iss langsam und kaue gründlich, um die Verdauung zu verbessern.'
+            'Drink plenty of water.',
+            'Eat more protein.',
+            'Avoid processed foods.',
+            'Plan your meals ahead.',
+            'Eat a variety of colors to get all necessary nutrients.',
+            'Reduce sugar, especially in sweetened drinks and snacks.',
+            'Eat slowly and chew thoroughly to improve digestion.'
         ],
         '2': [
-            'Wärme dich auf, bevor du trainierst.',
-            'Achte auf die richtige Form.',
-            'Steigere langsam das Gewicht.',
-            'Führe ein Trainingstagebuch.',
-            'Fokussiere dich auf die Atmung.',
-            'Dehne dich regelmäßig.',
-            'Nutze freie Gewichte für ein effektiveres Training.'
+            'Warm up before you exercise.',
+            'Focus on proper form.',
+            'Increase weight gradually.',
+            'Keep a workout journal.',
+            'Focus on your breathing.',
+            'Stretch regularly.',
+            'Use free weights for more effective training.'
         ],
         '3': [
-            'Setze dir realistische Ziele.',
-            'Finde einen Trainingspartner.',
-            'Erstelle eine motivierende Playlist.',
-            'Setze Zwischenziele, um motiviert zu bleiben.',
-            'Belohne dich selbst nach Erreichen eines Ziels.',
-            'Visualisiere deine Erfolge.',
-            'Verfolge deinen Fortschritt mit Fotos oder Tagebüchern.'
+            'Set realistic goals.',
+            'Find a workout buddy.',
+            'Create a motivating playlist.',
+            'Set milestones to stay motivated.',
+            'Reward yourself after reaching a goal.',
+            'Visualize your successes.',
+            'Track your progress with photos or journals.'
         ],
         '4': [
-            'Achte darauf, jede Nacht 7-9 Stunden Schlaf zu bekommen.',
-            'Plane leichte Aktivitäten wie Spaziergänge, Yoga oder Schwimmen an Ruhetagen.',
-            'Integriere regelmäßiges Dehnen und Mobilitätsübungen in deinen Alltag.',
-            'Trinke ausreichend Wasser, um den Flüssigkeitsverlust durch Schwitzen auszugleichen.',
-            'Iss eine ausgewogene Mahlzeit oder einen Snack innerhalb von 30-60 Minuten nach dem Training.',
-            'Nutze Massagerollen, Bälle oder Besuche bei einem Masseur.',
-            'Probiere Techniken wie Eisbäder, Sauna oder Wechselduschen aus.',
-            'Plane regelmäßige Pausen und Regenerationstage in deinem Trainingsprogramm ein.'
+            'Aim to get 7-9 hours of sleep each night.',
+            'Plan light activities like walks, yoga, or swimming on rest days.',
+            'Incorporate regular stretching and mobility exercises into your routine.',
+            'Drink enough water to replace fluids lost through sweat.',
+            'Eat a balanced meal or snack within 30-60 minutes after training.',
+            'Use massage rollers, balls, or visit a masseur.',
+            'Try techniques like ice baths, sauna, or contrast showers.',
+            'Plan regular breaks and recovery days in your training schedule.'
         ]
     };
 
-    // Funktion zum Verarbeiten des Klicks auf eine Kategorie
     const handleCategoryPress = (categoryId: CategoryId) => {
         setSelectedCategory(categoryId);
     };
 
-    // Render-Funktion für einzelne Tipps in der Detailansicht
     const renderItem = ({ item }: { item: string }) => (
         <View style={styles.tipContainer}>
+            <View style={styles.iconContainer}>
+                <FontAwesome name="check-circle" size={24} color="#4CAF50" />
+            </View>
             <Text style={styles.tipText}>{item}</Text>
         </View>
     );
@@ -72,12 +71,10 @@ const tips: React.FC = () => {
     return (
         <View style={styles.container}>
             {selectedCategory === null ? (
-                // Wenn keine Kategorie ausgewählt ist, zeige die Kategorienauswahl an
                 <View>
-                    <Text style={styles.title}>Wähle eine Kategorie</Text>
+                    <Text style={styles.title}>Select a Category</Text>
                     <View style={styles.categoriesContainer}>
                         {categories.map(category => (
-                            // Kategoriebox mit Hintergrundbild und Titel
                             <TouchableOpacity
                                 key={category.id}
                                 style={styles.categoryBox}
@@ -93,10 +90,9 @@ const tips: React.FC = () => {
                     </View>
                 </View>
             ) : (
-                // Wenn eine Kategorie ausgewählt ist, zeige die Tipps dieser Kategorie an
                 <View>
                     <TouchableOpacity onPress={() => setSelectedCategory(null)} style={styles.backButton}>
-                        <Text style={styles.backButtonText}>← Zurück zu den Kategorien</Text>
+                        <Text style={styles.backButtonText}>← Back to Categories</Text>
                     </TouchableOpacity>
                     <FlatList
                         data={tipsData[selectedCategory]}
@@ -110,7 +106,6 @@ const tips: React.FC = () => {
     );
 }
 
-// Stile für die verschiedenen Komponenten der Benutzeroberfläche
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -133,7 +128,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-evenly',
     },
     categoryBox: {
-        width: '50%',
+        width: '45%',
         margin: 10,
         borderRadius: 10,
         overflow: 'hidden',
@@ -162,10 +157,11 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     backButton: {
-        backgroundColor: '#007BFF',
+        backgroundColor: '#6200EE',
         padding: 10,
         borderRadius: 10,
         alignItems: 'center',
+        alignSelf: 'center',
         marginBottom: 20,
     },
     backButtonText: {
@@ -177,21 +173,30 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     tipContainer: {
-        backgroundColor: '#e0e0e0',
-        padding: 15,
+        backgroundColor: '#fff',
+        padding: 20,
         marginVertical: 10,
-        borderRadius: 8,
+        borderRadius: 10,
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.8,
-        shadowRadius: 2,
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 10,
         elevation: 3,
-        width: '90%',
+        width: '90%', // Set a fixed width for consistency
+       // maxWidth: 400, // Ensure a maximum width for consistency
+        flexDirection: 'row',
+        alignItems: 'center',
+      //  minHeight: 100, // Set a minimum height for consistency
+    },
+    iconContainer: {
+        marginRight: 10,
     },
     tipText: {
         fontSize: 16,
-        textAlign: 'center',
+        textAlign: 'left',
+        color: '#333',
+        flex: 1,
     },
 });
 
-export default tips;
+export default Tips;
