@@ -1,51 +1,63 @@
-import React, { useState } from 'react';
-import { View, Text, Image, Button, StyleSheet } from 'react-native';
-import { launchCamera } from 'react-native-image-picker';
-import styles from "@/styles/exercise"; // Beibehalten der allgemeinen Stile
+import React, { useState, useEffect } from 'react';
+import { View, Text, Image, Button, StyleSheet, Platform, Alert } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
 
-const myProgress: React.FC = () => {
-    const [photo, setPhoto] = useState(null);
+const MyProgress = () => {
+    const [photo, setPhoto] = useState<string | null>(null);
 
-    const takePhoto = () => {
-        launchCamera({ mediaType: 'photo' }, (response) => {
-            if (response.didCancel) {
-                console.log('User cancelled image picker');
-            } else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
-            } else {
-                const source = { uri: response.uri };
-                setPhoto(source);
+    useEffect(() => {
+        (async () => {
+            if (Platform.OS !== 'web') {
+                const { status } = await ImagePicker.requestCameraPermissionsAsync();
+                if (status !== 'granted') {
+                    Alert.alert('Kamera-Zugriff benötigt', 'Wir benötigen Ihre Zustimmung, um die Kamera zu nutzen');
+                }
             }
-        });
+        })();
+    }, []);
+
+    const takePhoto = async () => {
+        try {
+            const result = await ImagePicker.launchCameraAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                allowsEditing: true,
+                aspect: [4, 3],
+                quality: 1,
+            });
+
+            if (!result.canceled) {
+                setPhoto(result.uri);
+            }
+        } catch (error) {
+            Alert.alert('Fehler', 'Konnte kein Foto machen: ' + error.message);
+        }
     };
 
     return (
-        <View style={[styles.container, localStyles.container]}>
-            <Text style={localStyles.text}>Mein Fortschritt</Text>
-
-            <Text style={localStyles.text1}>Hier kannst du deinen Fortschritt sehen</Text>
-            <Text style={localStyles.text1}>und dich motivieren lassen.</Text>
+        <View style={styles.container}>
+            <Text style={styles.text}>Mein Fortschritt</Text>
+            <Text style={styles.text1}>Hier kannst du deinen Fortschritt sehen und dich motivieren lassen.</Text>
 
             <Button title="Foto machen" onPress={takePhoto} />
 
-            {photo && <Image source={photo} style={localStyles.image} />}
+            {photo && <Image source={{ uri: photo }} style={styles.image} />}
 
         </View>
     );
-}
+};
 
-const localStyles = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#f0f0f0', // Hintergrundfarbe
+        backgroundColor: '#f0f0f0',
     },
     image: {
         width: 300,
         height: 200,
-        borderRadius: 15, // Abgerundete Ecken
-        marginBottom: 20, // Abstand zum Text
+        borderRadius: 15,
+        marginBottom: 20,
     },
     text: {
         fontSize: 24,
@@ -60,4 +72,4 @@ const localStyles = StyleSheet.create({
     },
 });
 
-export default myProgress;
+export default MyProgress;
