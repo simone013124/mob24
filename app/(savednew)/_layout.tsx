@@ -4,11 +4,12 @@ export default function WorkoutLayout () {
     return (
         <Stack screenOptions={{
             headerStyle: {
-                backgroundColor: '#f4511e',
+                backgroundColor: '#d19dd1',
             },
+            headerTitleAlign: 'center',
             headerTintColor: '#fff',
             headerTitleStyle: {
-                fontWeight: 'bold',
+                fontSize: 18,
             },
         }}
         >

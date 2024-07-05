@@ -1,25 +1,16 @@
-import {
-    StyleSheet,
-    View,
-    Text,
-    Pressable,
-    FlatList,
-    TouchableOpacity,
-    Modal,
-    TouchableWithoutFeedback,
-    Keyboard
-} from 'react-native';
-import { router } from "expo-router";
+import { StyleSheet, View, Text, FlatList, TouchableOpacity, Modal, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import {router, useRouter} from "expo-router"; // Ändere den Import hier
 import { useState } from "react";
-import Card from '../../components/card';
 import { MaterialIcons } from "@expo/vector-icons";
-import WorkoutForm from "../../components/workoutForm"; // Updated Form Component
+import Card from '../../components/card';
+import WorkoutForm from "../../components/workoutForm";
+import { Exercise } from "@/types/exercise";
 
 export type Workout = {
     title: string,
     description: string,
     key: string,
-    exercises: Exercise[], // Adding exercises array
+    // exercises: Exercise[], // Adding exercises array
 }
 
 export default function HomePage() {
@@ -38,8 +29,10 @@ export default function HomePage() {
         setModalOpen(false);
     };
 
+    const router = useRouter();
+
     return (
-        <View>
+        <View style={styles.container}>
             <Modal visible={modalOpen} animationType='slide'>
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                     <View style={styles.modalContent}>
@@ -62,9 +55,9 @@ export default function HomePage() {
             />
 
             <FlatList data={workouts} renderItem={({ item }) => (
-                <TouchableOpacity onPress={() => router.push({ pathname: item.key, params: item })}>
+                <TouchableOpacity onPress={() => router.push({pathname:item.key, params:item})}>
                     <Card>
-                        <Text >{item.title}</Text>
+                        <Text style={styles.text}>{ item.title }</Text>
                     </Card>
                 </TouchableOpacity>
             )} />
@@ -73,6 +66,11 @@ export default function HomePage() {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        padding: 20,
+        backgroundColor: 'transparent',
+    },
     modalToggle: {
         justifyContent: 'center',
         alignItems: 'center',
@@ -89,5 +87,9 @@ const styles = StyleSheet.create({
     },
     modalContent: {
         flex: 1,
-    }
+    },
+    text: {
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
 });

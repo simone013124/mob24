@@ -12,7 +12,7 @@ export type Category = {
 
 export default function ExercisePage() {
     const [modalOpen, setModalOpen] = useState(false);
-    const [reviews, setReviews] = useState<Category[]>([
+    const [categories, setCategories] = useState<Category[]>([
         { title: 'beginner', key: '1' },
         { title: 'intermediate', key: '2' },
         { title: 'expert', key: '3' },
@@ -37,7 +37,7 @@ export default function ExercisePage() {
 
 
 
-            <FlatList data={reviews} renderItem={({ item }) => (
+            <FlatList data={categories} renderItem={({ item }) => (
                 <TouchableOpacity onPress={() => router.push({pathname:item.key, params:item})}>
                     <Card>
                         <Text style={styles.text}>{ item.title }</Text>
