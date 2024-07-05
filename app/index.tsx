@@ -33,6 +33,7 @@ export default function HomeScreen() {
                         <Text style={styles.quote}>"{quote?.content}" - {quote?.author}</Text>
                     )}
                 </View>
+
             </View>
         </ImageBackground>
     );

@@ -9,6 +9,7 @@ import FlatButton from './button.tsx';
 
 const IMAGE_BASE_URL = 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/';
 
+
 interface ExerciseDetailProps {
     exercise: Exercise;
     onBack: () => void;
@@ -23,24 +24,19 @@ const exerciseSchema = Yup.object({
 
 const ExerciseDetail: React.FC<ExerciseDetailProps> = ({ exercise, onBack }) => {
     const [repetitions, setRepetitions] = useState(null);
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const photos = exercise.images;  // Assuming `exercise.images` is an array of image paths
-
-    // Store the first photo
-    const firstPhoto = `${IMAGE_BASE_URL}${photos[0]}`;
 
 
     let item = useLocalSearchParams();
     console.log(exercise.images);
     console.log("here i am ");
-    console.log(firstPhoto);
+    console.log(exercise.imageUrl);
 
 
     return (
         <ScrollView style={styles.container}>
             <Text style={styles.exerciseName}>{exercise.name}</Text>
             <Image
-                source={{ uri: '${firstPhoto}', }}
+                source={{ uri: `${IMAGE_BASE_URL}${exercise.images[0]}` }}
                 style={styles.exerciseImage}
             />
             <Text style={styles.exerciseDetailLabel}>Force: {exercise.force}</Text>
