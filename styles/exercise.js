@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
 		width: '100%', // 100% der Breite des Containers
 		aspectRatio: 1, // Verhältnis von Breite zu Höhe (1:1), könnte anpassen
 		marginTop: 10,
+		marginBottom: 10,
 		resizeMode: 'cover', // Anpassen, um das Verhalten der Bildskalierung zu steuern
 		borderRadius: 10,
 	},

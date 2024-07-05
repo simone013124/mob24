@@ -37,7 +37,7 @@ const ExerciseDetail: React.FC<ExerciseDetailProps> = ({ exercise, onBack }) => 
 
 
     return (
-        <ScrollView style={styles.container}>
+        <View style={styles.container}>
             <Text style={styles.exerciseName}>{exercise.name}</Text>
             <Image
                 source={{ uri: firstPhoto }}
@@ -78,7 +78,7 @@ const ExerciseDetail: React.FC<ExerciseDetailProps> = ({ exercise, onBack }) => 
                         {touched.repetitions && errors.repetitions && (
                             <Text style={styles.errorText}>{errors.repetitions}</Text>
                         )}
-                        <FlatButton onPress={handleSubmit} text="Save" />
+                        <FlatButton onPress={handleSubmit} text="Save Reps" />
                         {repetitions && (
                             <Text style={styles.resultText}>You have completed {repetitions} repetitions. You are a fucking Beast.</Text>
                         )}
@@ -86,7 +86,7 @@ const ExerciseDetail: React.FC<ExerciseDetailProps> = ({ exercise, onBack }) => 
                 )}
             </Formik>
             <FlatButton text="Back" onPress={onBack} />
-        </ScrollView>
+        </View>
     );
 };
 
