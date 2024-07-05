@@ -6,6 +6,7 @@ import { SimpleLineIcons } from '@expo/vector-icons';
 import { LikedWorkoutsProvider } from '../context/LikedWorkoutsContext';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -74,7 +75,7 @@ function TabsLayout() {
             <Tabs.Screen name="(exercisetype)" options={{
                 headerShown: false,
                 title: "exercise",
-                tabBarIcon: ({ color }) => <FontAwesome size={28} name="heart" color={color} />
+                tabBarIcon: ({ color }) => <MaterialIcons name="fitness-center" size={24} color="grey" />
             }} />
 
             <Tabs.Screen name="about" options={{

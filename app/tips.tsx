@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, FlatList, StyleSheet, ImageBackground } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, StyleSheet, ImageBackground, ScrollView } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 
 // Define the type for category IDs, add '4' for the new category
 type CategoryId = '1' | '2' | '3' | '4';
@@ -69,48 +70,63 @@ const Tips: React.FC = () => {
     );
 
     return (
-        <View style={styles.container}>
-            {selectedCategory === null ? (
-                <View>
-                    <Text style={styles.title}>Select a Category</Text>
-                    <View style={styles.categoriesContainer}>
-                        {categories.map(category => (
-                            <TouchableOpacity
-                                key={category.id}
-                                style={styles.categoryBox}
-                                onPress={() => handleCategoryPress(category.id as CategoryId)}
-                            >
-                                <ImageBackground source={category.image} style={styles.imageBackground} imageStyle={styles.imageStyle}>
-                                    <View style={styles.overlay}>
-                                        <Text style={styles.categoryText}>{category.title}</Text>
-                                    </View>
-                                </ImageBackground>
+        <LinearGradient
+            colors={['#d2a9d2', '#e7e4e4', '#a9c6d2']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={styles.fullScreen}
+        >
+            <ScrollView contentContainerStyle={styles.scrollContainer}>
+                <View style={styles.container}>
+                    {selectedCategory === null ? (
+                        <View>
+                            <Text style={styles.title}>Select a Category</Text>
+                            <View style={styles.categoriesContainer}>
+                                {categories.map(category => (
+                                    <TouchableOpacity
+                                        key={category.id}
+                                        style={styles.categoryBox}
+                                        onPress={() => handleCategoryPress(category.id as CategoryId)}
+                                    >
+                                        <ImageBackground source={category.image} style={styles.imageBackground} imageStyle={styles.imageStyle}>
+                                            <View style={styles.overlay}>
+                                                <Text style={styles.categoryText}>{category.title}</Text>
+                                            </View>
+                                        </ImageBackground>
+                                    </TouchableOpacity>
+                                ))}
+                            </View>
+                        </View>
+                    ) : (
+                        <View>
+                            <TouchableOpacity onPress={() => setSelectedCategory(null)} style={styles.backButton}>
+                                <Text style={styles.backButtonText}>← Back to Categories</Text>
                             </TouchableOpacity>
-                        ))}
-                    </View>
+                            <FlatList
+                                data={tipsData[selectedCategory]}
+                                renderItem={renderItem}
+                                keyExtractor={(item, index) => index.toString()}
+                                contentContainerStyle={styles.tipsList}
+                            />
+                        </View>
+                    )}
                 </View>
-            ) : (
-                <View>
-                    <TouchableOpacity onPress={() => setSelectedCategory(null)} style={styles.backButton}>
-                        <Text style={styles.backButtonText}>← Back to Categories</Text>
-                    </TouchableOpacity>
-                    <FlatList
-                        data={tipsData[selectedCategory]}
-                        renderItem={renderItem}
-                        keyExtractor={(item, index) => index.toString()}
-                        contentContainerStyle={styles.tipsList}
-                    />
-                </View>
-            )}
-        </View>
+            </ScrollView>
+        </LinearGradient>
     );
 }
 
 const styles = StyleSheet.create({
+    fullScreen: {
+        flex: 1,
+    },
+    scrollContainer: {
+        flexGrow: 1,
+    },
     container: {
         flex: 1,
         padding: 20,
-        backgroundColor: '#fff',
+        backgroundColor: 'transparent',
     },
     center: {
         justifyContent: 'center',
@@ -182,11 +198,9 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.1,
         shadowRadius: 10,
         elevation: 3,
-        width: '90%', // Set a fixed width for consistency
-       // maxWidth: 400, // Ensure a maximum width for consistency
+        width: '90%',
         flexDirection: 'row',
         alignItems: 'center',
-      //  minHeight: 100, // Set a minimum height for consistency
     },
     iconContainer: {
         marginRight: 10,

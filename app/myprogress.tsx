@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView, Alert, Platform } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import { Ionicons } from '@expo/vector-icons'; // Importieren des Icons
+import { Ionicons } from '@expo/vector-icons'; // Importing the icon
+import { LinearGradient } from 'expo-linear-gradient'; // Import LinearGradient
 
 type Photo = {
     uri: string;
@@ -34,7 +35,7 @@ const MyProgress = () => {
             if (!result.canceled && result.assets && result.assets.length > 0) {
                 const newPhoto: Photo = {
                     uri: result.assets[0].uri,
-                    date: new Date().toLocaleString(), // Aktuelles Datum und Uhrzeit
+                    date: new Date().toLocaleString(), // Current date and time
                 };
                 setPhotos([...photos, newPhoto]);
             }
@@ -44,32 +45,41 @@ const MyProgress = () => {
     };
 
     return (
-        <ScrollView contentContainerStyle={styles.container}>
-            <Text style={styles.text}>Mein Fortschritt</Text>
-            <Text style={styles.text1}>Hier kannst du deinen Fortschritt dokumentieren!</Text>
-            <Text style={styles.text1}>Schieße gleich ein Bild!</Text>
+        <LinearGradient
+            colors={['#d2a9d2', '#e7e4e4', '#a9c6d2']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={styles.fullScreen}
+        >
+            <ScrollView contentContainerStyle={styles.container}>
+                <Text style={styles.text}>Mein Fortschritt</Text>
+                <Text style={styles.text1}>Hier kannst du deinen Fortschritt dokumentieren!</Text>
+                <Text style={styles.text1}>Schieße gleich ein Bild!</Text>
 
-            <TouchableOpacity style={styles.button} onPress={takePhoto}>
-                <Ionicons name="camera" size={24} color="white" />
-                <Text style={styles.buttonText}>Foto machen</Text>
-            </TouchableOpacity>
+                <TouchableOpacity style={styles.button} onPress={takePhoto}>
+                    <Ionicons name="camera" size={24} color="white" />
+                    <Text style={styles.buttonText}>Foto machen</Text>
+                </TouchableOpacity>
 
-            {photos.map((photo, index) => (
-                <View key={index} style={styles.photoContainer}>
-                    <Image source={{ uri: photo.uri }} style={styles.image} />
-                    <Text style={styles.date}>{photo.date}</Text>
-                </View>
-            ))}
-        </ScrollView>
+                {photos.map((photo, index) => (
+                    <View key={index} style={styles.photoContainer}>
+                        <Image source={{ uri: photo.uri }} style={styles.image} />
+                        <Text style={styles.date}>{photo.date}</Text>
+                    </View>
+                ))}
+            </ScrollView>
+        </LinearGradient>
     );
 };
 
 const styles = StyleSheet.create({
+    fullScreen: {
+        flex: 1,
+    },
     container: {
-        flex: 2,
+        flexGrow: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#f0f0f0',
         padding: 20,
     },
     photoContainer: {
