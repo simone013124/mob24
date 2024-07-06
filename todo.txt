@@ -1,0 +1,6 @@
+// todos
+
+async storage -> plugin
+workouts adden
+    darin übungen speichern
+    save button toggle down mehr auswählen

@@ -98,9 +98,9 @@ function TabsLayout() {
             }} />
 
             <Tabs.Screen name="workouts" options={{
-                headerTitle: "Your Saved Exercises",
+                headerTitle: "Your customized workouts",
                 title: "workouts",
-                tabBarIcon: ({ color }) => <FontAwesome size={28} name="workouts" color={color} />
+                tabBarIcon: ({ color }) => <FontAwesome size={28} name="save" color={color} />
             }} />
 
             </Tabs>

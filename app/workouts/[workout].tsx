@@ -12,6 +12,7 @@ export default function WorkoutDetail() {
             <Card>
                 <Text style={styles.text}>{title}</Text>
                 <Text style={styles.description}>{description}</Text>
+
             </Card>
         </ScrollView>
     );
