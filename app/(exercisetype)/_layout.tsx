@@ -20,7 +20,7 @@ export default function ExerciseLayout () {
             }}/>
 
 
-            <Stack.Screen name="[category]" options={{
+            <Stack.Screen name="categories/[category]" options={{
                 headerTitle: "Category Details",
             }} />
 

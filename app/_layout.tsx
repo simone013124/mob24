@@ -97,10 +97,10 @@ function TabsLayout() {
                 tabBarIcon: ({ color }) => <Entypo name="progress-two" size={24} color="grey" />
             }} />
 
-            <Tabs.Screen name="(savednew)" options={{
+            <Tabs.Screen name="workouts" options={{
                 headerTitle: "Your Saved Exercises",
-                title: "Saved",
-                tabBarIcon: ({ color }) => <FontAwesome size={28} name="save" color={color} />
+                title: "workouts",
+                tabBarIcon: ({ color }) => <FontAwesome size={28} name="workouts" color={color} />
             }} />
 
             </Tabs>

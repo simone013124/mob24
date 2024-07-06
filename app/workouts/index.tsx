@@ -1,19 +1,17 @@
+import React, { useState } from 'react';
 import { StyleSheet, View, Text, FlatList, TouchableOpacity, Modal, TouchableWithoutFeedback, Keyboard } from 'react-native';
-import {router, useRouter} from "expo-router"; // Ändere den Import hier
-import { useState } from "react";
-import { MaterialIcons } from "@expo/vector-icons";
+import { router } from "expo-router";
+import { MaterialIcons } from '@expo/vector-icons';
 import Card from '../../components/card';
-import WorkoutForm from "../../components/workoutForm";
-import { Exercise } from "@/types/exercise";
+import WorkoutForm from '../../components/workoutForm';
 
 export type Workout = {
     title: string,
     description: string,
     key: string,
-    // exercises: Exercise[], // Adding exercises array
 }
 
-export default function HomePage() {
+export default function WorkoutPage() {
     const [modalOpen, setModalOpen] = useState(false);
     const [workouts, setWorkouts] = useState<Workout[]>([
         { title: 'Morning Yoga', description: 'A relaxing morning yoga routine.', key: '1' },
@@ -29,10 +27,8 @@ export default function HomePage() {
         setModalOpen(false);
     };
 
-    const router = useRouter();
-
     return (
-        <View style={styles.container}>
+        <View>
             <Modal visible={modalOpen} animationType='slide'>
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                     <View style={styles.modalContent}>
@@ -47,30 +43,22 @@ export default function HomePage() {
                 </TouchableWithoutFeedback>
             </Modal>
 
-            <MaterialIcons
-                name='add'
-                size={24}
-                style={styles.modalToggle}
-                onPress={() => setModalOpen(true)}
+            <FlatList
+                data={workouts}
+                renderItem={({ item }) => (
+                    <TouchableOpacity onPress={() => router.push({ pathname: "workouts/item.workoutName", params: item })}>
+                        <Card>
+                            <Text style={styles.text}>{item.title}</Text>
+                        </Card>
+                    </TouchableOpacity>
+                )}
             />
 
-            <FlatList data={workouts} renderItem={({ item }) => (
-                <TouchableOpacity onPress={() => router.push({pathname:item.key, params:item})}>
-                    <Card>
-                        <Text style={styles.text}>{ item.title }</Text>
-                    </Card>
-                </TouchableOpacity>
-            )} />
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 20,
-        backgroundColor: 'transparent',
-    },
     modalToggle: {
         justifyContent: 'center',
         alignItems: 'center',
