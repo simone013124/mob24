@@ -67,8 +67,8 @@ function TabsLayout() {
 
             <Tabs.Screen name="saved" options={{
                 headerTitle: "Your Saved Exercises",
-                title: "Saved",
-                tabBarIcon: ({ color }) => <FontAwesome size={28} name="save" color={color} />
+                title: "Liked",
+                tabBarIcon: ({ color }) => <FontAwesome name="heart-o" size={24} color="grey" />
             }} />
 
 
