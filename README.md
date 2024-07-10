@@ -14,7 +14,7 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
 
 ## Get started
 
-### change to directory `mob24`
+1. change to directory `mob24`
 
 ```bash
 cd mob24
