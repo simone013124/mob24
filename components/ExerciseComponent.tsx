@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Text, View, ActivityIndicator, FlatList } from "react-native";
 import DropDownPicker from 'react-native-dropdown-picker';
 import styles from '../styles/exercise';
-import globalStyles from '../styles/global';
 import { Exercise } from '@/types/exercise';
 import { fetchExercises } from '@/api/exerciseapi';
 import { useLikedWorkouts } from '@/context/LikedWorkoutsContext';

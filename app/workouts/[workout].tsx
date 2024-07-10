@@ -41,7 +41,7 @@ export default function WorkoutDetail() {
                         </View>
                     ))
                 ) : (
-                    // Display message if no exercises found
+                   
                     <Text>No exercises found for this workout.</Text>
                 )}
                 <TouchableOpacity onPress={handleRemoveWorkout} style={styles.removeWorkoutButton}>

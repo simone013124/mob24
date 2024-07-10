@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, Platform } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import styles from "@/styles/exercise"; // Beibehalten der allgemeinen Stile
 
 const About: React.FC = () => {
     return (

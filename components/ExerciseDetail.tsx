@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { ScrollView, View, Text, StyleSheet, Image, TextInput} from 'react-native';
-import { Exercise } from '../types/exercise';
+import { Exercise } from '@/types/exercise';
 import {Formik} from "formik";
 import * as Yup from "yup";
 import {useLocalSearchParams} from "expo-router";
@@ -17,9 +17,9 @@ interface ExerciseDetailProps {
 
 const exerciseSchema = Yup.object({
     repetitions: Yup.number()
-        .required('Bitte die Anzahl der Wiederholungen eingeben.')
-        .min(1, 'Die Wiederholungen müssen mindestens 1 sein.')
-        .integer('Bitte eine ganze Zahl eingeben.')
+        .required('Please enter the number of repetitions.')
+        .min(1, 'The repetitions must be at least 1.')
+        .integer('Please enter a valid & whole number.')
 });
 
 const ExerciseDetail: React.FC<ExerciseDetailProps> = ({ exercise, onBack }) => {
