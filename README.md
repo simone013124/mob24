@@ -2,16 +2,29 @@
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
+## Table of Contents
+- [Get started](#get-started)
+   - [Install dependencies](#install-dependencies)
+   - [Start the app](#start-the-app)
+   - [Open the app](#open-the-app)
+- [Project structure](#project-structure)
+- [Resetting the project](#resetting-the-project)
+- [Learn more](#learn-more)
+- [Join the community](#join-the-community)
+
 ## Get started
 
-1. Install dependencies
+### Install dependencies
+
+First, make sure you have Node.js installed. Then, in your project directory, run:
 
    ```bash
    npm install
-   ```
+
 
 2. Start the app
 
+To start the development server, run:
    ```bash
     npx expo start
    ```
@@ -25,17 +38,16 @@ In the output, you'll find options to open the app in a
 
 You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
-## Get a fresh project
 
-When you're ready, run:
+## Project structure
+The main directory structure of the project is as follows:
 
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
+- app/: Contains the source code for your application.
+- components/: Reusable components used across the app.
+- context/: Context providers for global state management.
+- api/: API functions for data fetching.
+- styles/: Style definitions for the app.
+- assets/: Static assets such as images and fonts.
 
 To learn more about developing your project with Expo, look at the following resources:
 
