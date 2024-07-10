@@ -11,7 +11,7 @@ export default function CategoryDetail(props) {
     let item = useLocalSearchParams();
 
     return (
-        <ScrollView contentContainerStyle={styles.fullScreen}>
+        <View contentContainerStyle={styles.fullScreen}>
             <View contentContainerStyle={styles.container}>
             <Card>
                 <Text style={styles.text}>{item.title}</Text>
@@ -21,7 +21,7 @@ export default function CategoryDetail(props) {
             </Card>
 
             </View>
-        </ScrollView>
+        </View>
     );
 }
 

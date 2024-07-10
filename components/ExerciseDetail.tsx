@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { ScrollView, View, Text, StyleSheet, Image, TextInput} from 'react-native';
 import { Exercise } from '../types/exercise';
-import globalStyles from '../styles/global';
 import {Formik} from "formik";
 import * as Yup from "yup";
 import {useLocalSearchParams} from "expo-router";
@@ -54,7 +53,7 @@ const ExerciseDetail: React.FC<ExerciseDetailProps> = ({ exercise, onBack }) => 
     const firstPhoto = `${IMAGE_BASE_URL}${photos[0]}`;
     let item = useLocalSearchParams();
     return (
-        <ScrollView style={styles.container}>
+        <ScrollView style={styles.fullScreen}>
             <View style={styles.container}>
             <Text style={styles.exerciseName}>{exercise.name}</Text>
             <Image
@@ -117,6 +116,13 @@ const styles = StyleSheet.create({
         padding: 20,
         backgroundColor: 'transparent',
     },
+
+
+    fullScreen: {
+        flexGrow: 1,
+        marginBottom: 90,
+    },
+
     exerciseName: {
         fontSize: 24,
         fontWeight: 'bold',

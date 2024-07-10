@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView, Alert, Pla
 import * as ImagePicker from 'expo-image-picker';
 import { Ionicons } from '@expo/vector-icons'; // Importing the icon
 import { LinearGradient } from 'expo-linear-gradient'; // Import LinearGradient
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type Photo = {
     uri: string;
@@ -20,8 +21,32 @@ const MyProgress = () => {
                     Alert.alert('Kamera-Zugriff benötigt', 'Wir benötigen Ihre Zustimmung, um die Kamera zu nutzen');
                 }
             }
+
+            // Laden der gespeicherten Fotos aus AsyncStorage
+            try {
+                const jsonValue = await AsyncStorage.getItem('@photos');
+                if (jsonValue != null) {
+                    setPhotos(JSON.parse(jsonValue));
+                }
+            } catch (e) {
+                console.error('Fehler beim Laden der Fotos aus dem AsyncStorage', e);
+            }
         })();
     }, []);
+
+    useEffect(() => {
+        // Speichern der Fotos im AsyncStorage, wenn sich `photos` ändert
+        const savePhotos = async () => {
+            try {
+                const jsonValue = JSON.stringify(photos);
+                await AsyncStorage.setItem('@photos', jsonValue);
+            } catch (e) {
+                console.error('Fehler beim Speichern der Fotos im AsyncStorage', e);
+            }
+        };
+
+        savePhotos();
+    }, [photos]);
 
     const takePhoto = async () => {
         try {
@@ -35,12 +60,27 @@ const MyProgress = () => {
             if (!result.canceled && result.assets && result.assets.length > 0) {
                 const newPhoto: Photo = {
                     uri: result.assets[0].uri,
-                    date: new Date().toLocaleString(), // Current date and time
+                    date: new Date().toLocaleString(), // Aktuelles Datum und Zeit
                 };
                 setPhotos([...photos, newPhoto]);
             }
         } catch (error) {
             Alert.alert('Fehler', 'Konnte kein Foto machen: ' + (error as Error).message);
+        }
+    };
+
+    const deletePhoto = async (index: number) => {
+        // Kopie der Fotos erstellen, um das gelöschte Foto zu entfernen
+        const updatedPhotos = [...photos];
+        updatedPhotos.splice(index, 1);
+        setPhotos(updatedPhotos);
+
+        // Fotos im AsyncStorage aktualisieren
+        try {
+            const jsonValue = JSON.stringify(updatedPhotos);
+            await AsyncStorage.setItem('@photos', jsonValue);
+        } catch (e) {
+            console.error('Fehler beim Aktualisieren der Fotos im AsyncStorage nach dem Löschen', e);
         }
     };
 
@@ -65,6 +105,9 @@ const MyProgress = () => {
                     <View key={index} style={styles.photoContainer}>
                         <Image source={{ uri: photo.uri }} style={styles.image} />
                         <Text style={styles.date}>{photo.date}</Text>
+                        <TouchableOpacity onPress={() => deletePhoto(index)} style={styles.deleteButton}>
+                            <Ionicons name="trash-bin" size={24} color="white" />
+                        </TouchableOpacity>
                     </View>
                 ))}
             </ScrollView>
@@ -85,6 +128,7 @@ const styles = StyleSheet.create({
     photoContainer: {
         alignItems: 'center',
         marginBottom: 20,
+        position: 'relative', // Um die Position des Lösch-Buttons innerhalb des Containers zu steuern
     },
     image: {
         width: 300,
@@ -130,6 +174,14 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         marginLeft: 10,
+    },
+    deleteButton: {
+        position: 'absolute',
+        top: 10,
+        right: 10,
+        backgroundColor: 'red',
+        borderRadius: 15,
+        padding: 5,
     },
 });
 
