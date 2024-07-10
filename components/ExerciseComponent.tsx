@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, ActivityIndicator, FlatList, Button } from "react-native";
+import { Text, View, ActivityIndicator, FlatList } from "react-native";
 import styles from '../styles/exercise';
 import globalStyles from '../styles/global';
 import { Exercise } from '../types/exercise';
@@ -8,13 +8,7 @@ import { useLikedWorkouts } from '../context/LikedWorkoutsContext';
 import ExerciseDetail from './ExerciseDetail';
 import FlatButton from './button.tsx';
 
-const IMAGE_BASE_URL = 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/';
-
-interface ExerciseComponentProps {
-    level: string;
-}
-
-const ExerciseComponent: React.FC<ExerciseComponentProps> = ({ level }) => {
+const ExerciseComponent: React.FC<{ level: string }> = ({ level }) => {
     const [exercises, setExercises] = useState<Exercise[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
@@ -56,7 +50,6 @@ const ExerciseComponent: React.FC<ExerciseComponentProps> = ({ level }) => {
         return <ExerciseDetail exercise={selectedExercise} onBack={() => setSelectedExercise(null)} />;
     }
 
-    // Filtern der Übungen nach dem übergebenen Level
     const filteredExercises = exercises.filter(exercise => exercise.level === level);
 
     return (
@@ -72,7 +65,7 @@ const ExerciseComponent: React.FC<ExerciseComponentProps> = ({ level }) => {
                     <FlatButton
                         text={likedWorkouts.some(w => w.id === item.id) ? 'Unlike' : 'Like'}
                         onPress={() => {
-                            likedWorkouts.some(w => w.id === item.id) ? removeLikedWorkout(item) : addLikedWorkout(item)
+                            likedWorkouts.some(w => w.id === item.id) ? removeLikedWorkout(item) : addLikedWorkout(item);
                         }}
                     />
 

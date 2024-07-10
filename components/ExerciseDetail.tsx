@@ -1,11 +1,12 @@
-import React, {useState} from 'react';
-import { ScrollView, View, Text, StyleSheet, Image, Button, TextInput} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import { ScrollView, View, Text, StyleSheet, Image, TextInput} from 'react-native';
 import { Exercise } from '../types/exercise';
 import globalStyles from '../styles/global';
 import {Formik} from "formik";
 import * as Yup from "yup";
 import {useLocalSearchParams} from "expo-router";
 import FlatButton from './button.tsx';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const IMAGE_BASE_URL = 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/';
 
@@ -22,22 +23,39 @@ const exerciseSchema = Yup.object({
 });
 
 const ExerciseDetail: React.FC<ExerciseDetailProps> = ({ exercise, onBack }) => {
-    const [repetitions, setRepetitions] = useState(null);
+    const [repetitions, setRepetitions] = useState<number | null>(null);
     const [currentIndex, setCurrentIndex] = useState(0);
     const photos = exercise.images;  // Assuming `exercise.images` is an array of image paths
 
+    useEffect(() => {
+        const loadRepetitions = async () => {
+            try {
+                const savedRepetitions = await AsyncStorage.getItem(`@repetitions_${exercise.id}`);
+                if (savedRepetitions !== null) {
+                    setRepetitions(parseInt(savedRepetitions, 10));
+                }
+            } catch (e) {
+                console.error('Failed to load repetitions from storage', e);
+            }
+        };
+
+        loadRepetitions();
+    }, [exercise.id]);
+
+    const saveRepetitions = async (reps: number) => {
+        try {
+            await AsyncStorage.setItem(`@repetitions_${exercise.id}`, reps.toString());
+        } catch (e) {
+            console.error('Failed to save repetitions to storage', e);
+        }
+    };
+
     // Store the first photo
     const firstPhoto = `${IMAGE_BASE_URL}${photos[0]}`;
-
-
     let item = useLocalSearchParams();
-    console.log(exercise.images);
-    console.log("here i am ");
-    console.log(firstPhoto);
-
-
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
+            <View style={styles.container}>
             <Text style={styles.exerciseName}>{exercise.name}</Text>
             <Image
                 source={{ uri: firstPhoto }}
@@ -62,7 +80,9 @@ const ExerciseDetail: React.FC<ExerciseDetailProps> = ({ exercise, onBack }) => 
                 initialValues={{ repetitions: '' }}
                 onSubmit={(values, actions) => {
                     actions.resetForm();
-                    setRepetitions(values.repetitions);
+                    const reps = parseInt(values.repetitions, 10);
+                    setRepetitions(reps);
+                    saveRepetitions(reps);
                 }}
             >
                 {({ handleChange, handleSubmit, values, touched, errors }) => (
@@ -79,14 +99,15 @@ const ExerciseDetail: React.FC<ExerciseDetailProps> = ({ exercise, onBack }) => 
                             <Text style={styles.errorText}>{errors.repetitions}</Text>
                         )}
                         <FlatButton onPress={handleSubmit} text="Save Reps" />
-                        {repetitions && (
-                            <Text style={styles.resultText}>You have completed {repetitions} repetitions. You are a fucking Beast.</Text>
+                        {repetitions !== null && (
+                            <Text style={styles.resultText}>You have completed {repetitions} repetitions. You are a Beast.</Text>
                         )}
                     </View>
                 )}
             </Formik>
             <FlatButton text="Back" onPress={onBack} />
-        </View>
+            </View>
+        </ScrollView>
     );
 };
 
@@ -124,7 +145,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         marginBottom: 5,
     },
-
     errorText: {
         color: 'red',
         fontSize: 12,
@@ -135,12 +155,10 @@ const styles = StyleSheet.create({
         color: 'green',
         marginVertical: 10,
     },
-
-    text:{
+    text: {
         fontSize: 20,
         marginTop: 10,
         fontWeight: 'bold',
-
     },
     input: {
         borderWidth: 1,
@@ -149,7 +167,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         borderRadius: 6,
         marginVertical: 10,
-    }
+    },
 });
 
 export default ExerciseDetail;

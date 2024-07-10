@@ -1,4 +1,4 @@
-import {StyleSheet, View, Text, Pressable, FlatList, TouchableOpacity, Modal, TouchableWithoutFeedback, Keyboard} from 'react-native';
+import {StyleSheet, View, Text, Pressable, FlatList, Modal, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import {router} from "expo-router";
 import {useState} from "react";
 import {MaterialIcons} from "@expo/vector-icons";
@@ -33,16 +33,12 @@ export default function ExercisePage() {
                     </View>
                 </TouchableWithoutFeedback>
             </Modal>
-
-
-
-
             <FlatList data={categories} renderItem={({ item }) => (
-                <TouchableOpacity onPress={() => router.push({pathname:item.key, params:item})}>
+                <Pressable onPress={() => router.push({pathname:item.key, params:item})}>
                     <Card>
                         <Text style={styles.text}>{ item.title }</Text>
                     </Card>
-                </TouchableOpacity>
+                </Pressable>
             )} />
         </View>
     );
