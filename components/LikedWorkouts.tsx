@@ -1,5 +1,5 @@
 import React, { createContext, useState, ReactNode } from 'react';
-import { Workout } from '../types';
+import { Workout } from '@/types/workout';
 
 type LikedWorkoutsContextType = {
     workouts: Workout[];

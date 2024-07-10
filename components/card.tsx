@@ -27,10 +27,10 @@ const styles = StyleSheet.create({
         shadowRadius: 2,
         marginHorizontal: 4,
         marginVertical: 6,
-        padding: 10, // Padding für den Inhalt der Karte
+        padding: 10,
     },
     content: {
-        backgroundColor: 'transparent', // Hintergrundfarbe des Inhalts auf transparent setzen
+        backgroundColor: 'transparent',
     },
 });
 

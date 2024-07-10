@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, ImageBackground, ActivityIndicator } from 'react-native';
-import { Quote } from '../types/quote'; // Import the Quote interface
-import { fetchQuote } from '../api/quoteapi'; // Import the fetchQuote function
+import { Quote } from '@/types/quote';
+import { fetchQuote } from '@/api/quoteapi';
 
 export default function HomeScreen() {
     const [quote, setQuote] = useState<Quote | null>(null);

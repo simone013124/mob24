@@ -10,7 +10,7 @@ export const fetchExercises = async (): Promise<Exercise[]> => {
     }
     const exercisesData: Exercise[] = await response.json();
 
-    // Füge die vollständige Bild-URL zu jedem Exercise hinzu
+    // bild urls
     const exercisesWithImageUrls = exercisesData.map(exercise => ({
         ...exercise,
         imageUrl: `${IMAGE_BASE_URL}${exercise.imageUrl}`

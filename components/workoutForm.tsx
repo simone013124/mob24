@@ -1,5 +1,4 @@
-import { Button, TextInput, View, Text } from 'react-native';
-//import { globalStyles } from '../styles/global';
+import { Button, TextInput, View, Text, StyleSheet } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import FlatButton from './button';
@@ -21,6 +20,8 @@ const workoutSchema = yup.object({
 });
 
 export default function WorkoutForm(props: WorkoutFormProps) {
+    // @ts-ignore
+    // @ts-ignore
     return (
         <View >
             <Formik
@@ -32,12 +33,14 @@ export default function WorkoutForm(props: WorkoutFormProps) {
                 }}
             >
                 {(props) => (
-                    <View>
+                    <View style={styles.container}>
                         <TextInput
 
                             placeholder='Workout Title'
+                            placeholderTextColor='#888'
                             onChangeText={props.handleChange('title')}
                             value={props.values.title}
+                            style={styles.input}
                         />
                         <Text >{props.touched.title && props.errors.title}</Text>
 
@@ -45,8 +48,10 @@ export default function WorkoutForm(props: WorkoutFormProps) {
 
                             multiline
                             placeholder='Description'
+                            placeholderTextColor='#888'
                             onChangeText={props.handleChange('description')}
                             value={props.values.description}
+                            style={styles.input}
                         />
                         <Text >{props.touched.description && props.errors.description}</Text>
                         <FlatButton onPress={props.handleSubmit} text='Submit' />
@@ -56,3 +61,14 @@ export default function WorkoutForm(props: WorkoutFormProps) {
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        margin: 16, // Seitenabstand rundherum
+        padding: 16, // Optional: Innenabstand innerhalb der View
+        marginTop: 30,
+    },
+    input: {
+        marginBottom: 12, // Optional: Abstand zwischen den TextInputs
+    },
+});

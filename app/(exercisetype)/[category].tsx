@@ -12,7 +12,7 @@ export default function CategoryDetail(props) {
 
     return (
         <View contentContainerStyle={styles.fullScreen}>
-            <View contentContainerStyle={styles.container}>
+
             <Card>
                 <Text style={styles.text}>{item.title}</Text>
                 <View style={styles.rating}>
@@ -20,7 +20,6 @@ export default function CategoryDetail(props) {
                 </View>
             </Card>
 
-            </View>
         </View>
     );
 }

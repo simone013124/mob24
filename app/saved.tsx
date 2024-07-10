@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet, Image, ActivityIndicator } from 'react-native';
-import { useLikedWorkouts } from '../context/LikedWorkoutsContext';  // Verwende den Hook
-import { Exercise } from '../types/exercise';  // Importiere den Exercise Typ
+import { useLikedWorkouts } from '@/context/LikedWorkoutsContext';
+import { Exercise } from '@/types/exercise';
 import styles from '../styles/exercise';
-import globalStyles from '../styles/global';
 import ExerciseDetail from '../components/ExerciseDetail';
 import { LinearGradient } from 'expo-linear-gradient';
-import FlatButton from "../components/button.tsx";
-import { fetchExercises } from '../api/exerciseapi';
+
+import { fetchExercises } from '@/api/exerciseapi';
+import FlatButton from "@/components/button";
 
 const IMAGE_BASE_URL = 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/';
 

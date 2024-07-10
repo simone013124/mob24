@@ -41,7 +41,7 @@ export default function WorkoutDetail() {
                         </View>
                     ))
                 ) : (
-                    // Display message if no exercises found
+                   
                     <Text>No exercises found for this workout.</Text>
                 )}
                 <TouchableOpacity onPress={handleRemoveWorkout} style={styles.removeWorkoutButton}>
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
         padding: 10,
         backgroundColor: '#f9f9f9',
         borderRadius: 5,
-        flexDirection: 'row',
+        flexDirection: 'column',
         justifyContent: 'space-between',
         alignItems: 'center',
     },
