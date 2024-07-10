@@ -1,6 +1,6 @@
-// context/LikedWorkoutsContext.tsx
-import React, { createContext, useState, useContext, ReactNode } from 'react';
-import { Exercise } from '../types/exercise';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Exercise } from '../types/exercise';  // Stelle sicher, dass der korrekte Pfad verwendet wird
 
 interface LikedWorkoutsContextProps {
     likedWorkouts: Exercise[];
@@ -8,7 +8,7 @@ interface LikedWorkoutsContextProps {
     removeLikedWorkout: (workout: Exercise) => void;
 }
 
-export const LikedWorkoutsContext = createContext<LikedWorkoutsContextProps | undefined>(undefined);
+const LikedWorkoutsContext = createContext<LikedWorkoutsContextProps | undefined>(undefined);
 
 export const useLikedWorkouts = () => {
     const context = useContext(LikedWorkoutsContext);
@@ -18,15 +18,41 @@ export const useLikedWorkouts = () => {
     return context;
 };
 
-export const LikedWorkoutsProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const LikedWorkoutsProvider: React.FC = ({ children }) => {
     const [likedWorkouts, setLikedWorkouts] = useState<Exercise[]>([]);
 
+    useEffect(() => {
+        const loadLikedWorkouts = async () => {
+            try {
+                const jsonValue = await AsyncStorage.getItem('@liked_workouts');
+                if (jsonValue != null) {
+                    setLikedWorkouts(JSON.parse(jsonValue));
+                }
+            } catch (e) {
+                console.error('Failed to load liked workouts from storage', e);
+            }
+        };
+        loadLikedWorkouts();
+    }, []);
+
+    useEffect(() => {
+        const saveLikedWorkouts = async () => {
+            try {
+                const jsonValue = JSON.stringify(likedWorkouts);
+                await AsyncStorage.setItem('@liked_workouts', jsonValue);
+            } catch (e) {
+                console.error('Failed to save liked workouts to storage', e);
+            }
+        };
+        saveLikedWorkouts();
+    }, [likedWorkouts]);
+
     const addLikedWorkout = (workout: Exercise) => {
-        setLikedWorkouts((prevWorkouts) => [...prevWorkouts, workout]);
+        setLikedWorkouts((prevLikedWorkouts) => [...prevLikedWorkouts, workout]);
     };
 
     const removeLikedWorkout = (workout: Exercise) => {
-        setLikedWorkouts((prevWorkouts) => prevWorkouts.filter((w) => w.id !== workout.id));
+        setLikedWorkouts((prevLikedWorkouts) => prevLikedWorkouts.filter(w => w.id !== workout.id));
     };
 
     return (
@@ -35,38 +61,3 @@ export const LikedWorkoutsProvider: React.FC<{ children: ReactNode }> = ({ child
         </LikedWorkoutsContext.Provider>
     );
 };
-
-/*// In deiner LikedWorkoutsContext.tsx Datei oder einer ähnlichen Datei, die deinen Kontext verwaltet
-import React, { createContext, useState, useContext, ReactNode } from 'react';
-import { Exercise } from '../types/exercise';
-
-interface LikedWorkoutsContextProps {
-    likedWorkouts: Exercise[];
-    addLikedWorkout: (workout: Exercise) => void;
-    removeLikedWorkout: (workout: Exercise) => void;
-    likeWorkout: (workoutId: string) => void; // Neue Funktion hinzufügen
-}
-
-// ...
-
-export const LikedWorkoutsProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [likedWorkouts, setLikedWorkouts] = useState<Exercise[]>([]);
-
-    // ...
-
-    const likeWorkout = (workoutId: string) => {
-        // Hier kannst du Logik hinzufügen, um das Workout mit der gegebenen workoutId zu markieren
-        // Beispiel:
-        const workoutToLike = allExercises.find(workout => workout.id === workoutId);
-        if (workoutToLike) {
-            setLikedWorkouts(prevWorkouts => [...prevWorkouts, workoutToLike]);
-        }
-    };
-
-    return (
-        <LikedWorkoutsContext.Provider value={{ likedWorkouts, addLikedWorkout, removeLikedWorkout, likeWorkout }}>
-            {children}
-        </LikedWorkoutsContext.Provider>
-    );
-};
-*/

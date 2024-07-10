@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, TextInput, ScrollView } from 'react-native';
-import { Formik } from 'formik';
-import * as Yup from 'yup';
 import { useLocalSearchParams } from "expo-router";
 import Card from "../../components/card";
 import ExerciseComponent from "@/components/ExerciseComponent";
-import FlatButton from "../../components/button";
 
 
 
@@ -14,7 +11,8 @@ export default function CategoryDetail(props) {
     let item = useLocalSearchParams();
 
     return (
-        <ScrollView>
+        <View contentContainerStyle={styles.fullScreen}>
+            <View contentContainerStyle={styles.container}>
             <Card>
                 <Text style={styles.text}>{item.title}</Text>
                 <View style={styles.rating}>
@@ -22,7 +20,8 @@ export default function CategoryDetail(props) {
                 </View>
             </Card>
 
-        </ScrollView>
+            </View>
+        </View>
     );
 }
 
@@ -50,5 +49,18 @@ const styles = StyleSheet.create({
         fontSize: 20,
         textAlign: 'center',
         textTransform: 'uppercase',
-    }
+    },
+
+    fullScreen: {
+        flexGrow: 1,
+
+    },
+
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        padding: 20,
+    },
+
 });
+
