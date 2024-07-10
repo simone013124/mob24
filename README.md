@@ -14,6 +14,11 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
 
 ## Get started
 
+### change to directory `mob24`
+
+```bash
+cd mob24
+
 ### Install dependencies
 
 First, make sure you have Node.js installed. Then, in your project directory, run:
