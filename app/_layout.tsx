@@ -39,6 +39,7 @@ export default function RootLayout() {
         return null; // Anzeigen eines leeren Bildschirms, während Schriftarten geladen werden
     }
 
+
     return (
         <LikedWorkoutsProvider>
             <WorkoutsProvider>

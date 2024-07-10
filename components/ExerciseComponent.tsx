@@ -3,11 +3,11 @@ import { Text, View, ActivityIndicator, FlatList } from "react-native";
 import DropDownPicker from 'react-native-dropdown-picker';
 import styles from '../styles/exercise';
 import globalStyles from '../styles/global';
-import { Exercise } from '../types/exercise';
-import { fetchExercises } from '../api/exerciseapi';
-import { useLikedWorkouts } from '../context/LikedWorkoutsContext';
+import { Exercise } from '@/types/exercise';
+import { fetchExercises } from '@/api/exerciseapi';
+import { useLikedWorkouts } from '@/context/LikedWorkoutsContext';
 import ExerciseDetail from './ExerciseDetail';
-import { useWorkouts } from '../context/WorkoutsContext';
+import { useWorkouts } from '@/context/WorkoutsContext';
 import FlatButton from "@/components/button";
 
 const ExerciseComponent: React.FC<{ level: string }> = ({ level }) => {
@@ -58,17 +58,20 @@ const ExerciseComponent: React.FC<{ level: string }> = ({ level }) => {
 
     const handleAddToWorkout = (item: Exercise) => {
         if (selectedWorkout) {
-            try {
+            // Check if the workout already contains this exercise ID
+            if (workouts.some(workout => workout.id === selectedWorkout && workout.exercises && workout.exercises.some(ex => ex.id === item.id))) {
+                alert(`Exercise with ID ${item.id} is already added to workout ${selectedWorkout}`);
+            } else {
                 addExerciseToWorkout(selectedWorkout, item);
-                console.log(`Added exercise ${item.name} to workout ${selectedWorkout}`);
-            } catch (error) {
-                console.error('Error adding exercise to workout:', error);
-                // Hier könnten Sie setError verwenden, um den Fehlerzustand zu setzen und eine entsprechende Nachricht anzuzeigen
+                alert(`Added exercise ${item.name} to workout ${selectedWorkout}`);
             }
         } else {
             console.warn('No workout selected');
         }
     };
+
+
+
 
 
     return (
@@ -83,7 +86,6 @@ const ExerciseComponent: React.FC<{ level: string }> = ({ level }) => {
 
                     <DropDownPicker
                         items={workouts.map(workout => ({ label: workout.title, value: workout.id }))}
-                        defaultValue={selectedWorkout}
                         containerStyle={{ height: 40, marginBottom: 10 }}
                         open={open}
                         setOpen={setOpen}

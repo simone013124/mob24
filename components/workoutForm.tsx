@@ -3,13 +3,9 @@ import { Button, TextInput, View, Text } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import FlatButton from './button';
+import { Workout } from '@/types/workout';
 
-export type Workout = {
-    title: string,
-    duration: number,
-    description: string,
-    key: string
-};
+
 
 type WorkoutFormProps = {
     addWorkout: (workout: Workout) => void;
@@ -19,10 +15,6 @@ const workoutSchema = yup.object({
     title: yup.string()
         .required()
         .min(4),
-    duration: yup.number()
-        .required()
-        .positive()
-        .integer(),
     description: yup.string()
         .required()
         .min(8),
@@ -33,7 +25,7 @@ export default function WorkoutForm(props: WorkoutFormProps) {
         <View >
             <Formik
                 validationSchema={workoutSchema}
-                initialValues={{ title: '', duration: '', description: '', key: ''}}
+                initialValues={{ title: '', description: '', key: ''}}
                 onSubmit={(values: Workout, actions) => {
                     actions.resetForm();
                     props.addWorkout(values);
@@ -48,14 +40,7 @@ export default function WorkoutForm(props: WorkoutFormProps) {
                             value={props.values.title}
                         />
                         <Text >{props.touched.title && props.errors.title}</Text>
-                        <TextInput
 
-                            placeholder='Duration (minutes)'
-                            onChangeText={props.handleChange('duration')}
-                            value={props.values.duration.toString()}
-                            keyboardType='numeric'
-                        />
-                        <Text >{props.touched.duration && props.errors.duration}</Text>
                         <TextInput
 
                             multiline

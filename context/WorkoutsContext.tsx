@@ -7,10 +7,13 @@ type WorkoutsContextType = {
     workouts: Workout[];
     addWorkout: (workout: Workout) => void;
     addExerciseToWorkout: (workoutId: string, exercise: Exercise) => void;
+    removeExerciseFromWorkout: (workoutId: string, exerciseId: string) => void;
 };
+
 
 const WorkoutsContext = createContext<WorkoutsContextType | undefined>(undefined);
 
+// @ts-ignore
 export const WorkoutsProvider: React.FC = ({ children }) => {
     const [workouts, setWorkouts] = useState<Workout[]>([]);
 
@@ -48,6 +51,7 @@ export const WorkoutsProvider: React.FC = ({ children }) => {
         ]);
     };
 
+
     const addExerciseToWorkout = (workoutId: string, exercise: Exercise) => {
         setWorkouts((currentWorkouts) => {
             return currentWorkouts.map(workout => {
@@ -63,8 +67,24 @@ export const WorkoutsProvider: React.FC = ({ children }) => {
         });
     };
 
+    const removeExerciseFromWorkout = (workoutId: string, exerciseId: string) => {
+        const updatedWorkouts = workouts.map(workout => {
+            if (workout.id === workoutId) {
+                const updatedExercises = workout.exercises.filter(exercise => exercise.id !== exerciseId);
+                return {
+                    ...workout,
+                    exercises: updatedExercises,
+                };
+            }
+            return workout;
+        });
+        setWorkouts(updatedWorkouts);
+    };
+
+
+    // @ts-ignore
     return (
-        <WorkoutsContext.Provider value={{ workouts, addWorkout, addExerciseToWorkout }}>
+        <WorkoutsContext.Provider value={{ workouts, addWorkout, addExerciseToWorkout, removeExerciseFromWorkout}}>
             {children}
         </WorkoutsContext.Provider>
     );

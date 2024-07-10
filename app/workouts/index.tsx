@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Card from '../../components/card';
 import WorkoutForm from '../../components/workoutForm';
 
+
 export type Workout = {
     id: string,
     title: string,
