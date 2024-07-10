@@ -25,6 +25,7 @@ export const WorkoutsProvider: React.FC = ({ children }) => {
                 console.error('Failed to load workouts from storage', error);
             }
         };
+
         loadWorkouts();
     }, []);
 
@@ -36,20 +37,25 @@ export const WorkoutsProvider: React.FC = ({ children }) => {
                 console.error('Failed to save workouts to storage', error);
             }
         };
+
         saveWorkouts();
     }, [workouts]);
 
     const addWorkout = (workout: Workout) => {
-        setWorkouts((currentWorkouts) => [workout, ...currentWorkouts]);
+        setWorkouts((currentWorkouts) => [
+            { ...workout, exercises: [] }, // Initialize exercises if not present
+            ...currentWorkouts
+        ]);
     };
 
     const addExerciseToWorkout = (workoutId: string, exercise: Exercise) => {
         setWorkouts((currentWorkouts) => {
             return currentWorkouts.map(workout => {
                 if (workout.id === workoutId) {
+                    const exercises = workout.exercises || []; // Initialize exercises if not present
                     return {
                         ...workout,
-                        exercises: [...workout.exercises, exercise]
+                        exercises: [...exercises, exercise]
                     };
                 }
                 return workout;

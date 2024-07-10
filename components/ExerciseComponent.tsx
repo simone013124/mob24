@@ -8,14 +8,14 @@ import { fetchExercises } from '../api/exerciseapi';
 import { useLikedWorkouts } from '../context/LikedWorkoutsContext';
 import ExerciseDetail from './ExerciseDetail';
 import { useWorkouts } from '../context/WorkoutsContext';
-import FlatButton from "@/components/button"; // Importiere useWorkouts aus dem WorkoutsContext
+import FlatButton from "@/components/button";
 
 const ExerciseComponent: React.FC<{ level: string }> = ({ level }) => {
     const [exercises, setExercises] = useState<Exercise[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
     const { likedWorkouts, addLikedWorkout, removeLikedWorkout } = useLikedWorkouts();
-    const { workouts } = useWorkouts(); // Verwende useWorkouts aus dem WorkoutsContext
+    const { workouts, addExerciseToWorkout } = useWorkouts(); // Verwende useWorkouts aus dem WorkoutsContext
     const [selectedExercise, setSelectedExercise] = useState<Exercise | null>(null);
     const [selectedWorkout, setSelectedWorkout] = useState<string | null>(null); // State für ausgewähltes Workout im Dropdown-Menü
     const [open, setOpen] = useState(false); // State für das Öffnen/Schließen des Dropdown-Menüs
@@ -58,12 +58,18 @@ const ExerciseComponent: React.FC<{ level: string }> = ({ level }) => {
 
     const handleAddToWorkout = (item: Exercise) => {
         if (selectedWorkout) {
-            // Hier implementierst du die Logik zum Hinzufügen der Übung zu einem Workout
-            console.log(`Added exercise ${item.name} to workout ${selectedWorkout}`);
+            try {
+                addExerciseToWorkout(selectedWorkout, item);
+                console.log(`Added exercise ${item.name} to workout ${selectedWorkout}`);
+            } catch (error) {
+                console.error('Error adding exercise to workout:', error);
+                // Hier könnten Sie setError verwenden, um den Fehlerzustand zu setzen und eine entsprechende Nachricht anzuzeigen
+            }
         } else {
             console.warn('No workout selected');
         }
     };
+
 
     return (
         <FlatList
