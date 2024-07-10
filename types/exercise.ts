@@ -10,4 +10,5 @@ export interface Exercise {
     secondaryMuscles: string[];
     instructions: string[];
     images: string[];
+    imageUrl: string,
 }

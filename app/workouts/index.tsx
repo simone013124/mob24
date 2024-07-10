@@ -1,26 +1,48 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, Text, FlatList, TouchableOpacity, Modal, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, Text, FlatList, TouchableOpacity, Modal, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
 import { router } from "expo-router";
 import { MaterialIcons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Card from '../../components/card';
 import WorkoutForm from '../../components/workoutForm';
 
 export type Workout = {
+    id: string,
     title: string,
     description: string,
-    key: string,
 }
 
 export default function WorkoutPage() {
     const [modalOpen, setModalOpen] = useState(false);
-    const [workouts, setWorkouts] = useState<Workout[]>([
-        { title: 'Morning Yoga', description: 'A relaxing morning yoga routine.', key: '1' },
-        { title: 'HIIT Workout', description: 'High intensity interval training.', key: '2' },
-        { title: 'Strength Training', description: 'Build muscle and strength.', key: '3' },
-    ]);
+    const [workouts, setWorkouts] = useState<Workout[]>([]);
+
+    useEffect(() => {
+        const loadWorkouts = async () => {
+            try {
+                const workoutsData = await AsyncStorage.getItem('workouts');
+                if (workoutsData) {
+                    setWorkouts(JSON.parse(workoutsData));
+                }
+            } catch (error) {
+                console.error('Failed to load workouts from storage', error);
+            }
+        };
+        loadWorkouts();
+    }, []);
+
+    useEffect(() => {
+        const saveWorkouts = async () => {
+            try {
+                await AsyncStorage.setItem('workouts', JSON.stringify(workouts));
+            } catch (error) {
+                console.error('Failed to save workouts to storage', error);
+            }
+        };
+        saveWorkouts();
+    }, [workouts]);
 
     const addWorkout = (workout: Workout) => {
-        workout.key = Math.random().toString();
+        workout.id = Math.random().toString();
         setWorkouts((currentWorkouts) => {
             return [workout, ...currentWorkouts];
         });
@@ -43,6 +65,13 @@ export default function WorkoutPage() {
                 </TouchableWithoutFeedback>
             </Modal>
 
+            <MaterialIcons
+                name='add'
+                size={24}
+                style={styles.modalToggle}
+                onPress={() => setModalOpen(true)}
+            />
+
             <FlatList
                 data={workouts}
                 renderItem={({ item }) => (
@@ -52,8 +81,8 @@ export default function WorkoutPage() {
                         </Card>
                     </TouchableOpacity>
                 )}
+                keyExtractor={(item) => item.id}
             />
-
         </View>
     );
 }

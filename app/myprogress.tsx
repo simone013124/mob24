@@ -18,7 +18,7 @@ const MyProgress = () => {
             if (Platform.OS !== 'web') {
                 const { status } = await ImagePicker.requestCameraPermissionsAsync();
                 if (status !== 'granted') {
-                    Alert.alert('Kamera-Zugriff benötigt', 'Wir benötigen Ihre Zustimmung, um die Kamera zu nutzen');
+                    Alert.alert('Camera access required', 'We need your consent to use the camera.');
                 }
             }
 
@@ -29,7 +29,7 @@ const MyProgress = () => {
                     setPhotos(JSON.parse(jsonValue));
                 }
             } catch (e) {
-                console.error('Fehler beim Laden der Fotos aus dem AsyncStorage', e);
+                console.error('Error loading photos from storage', e);
             }
         })();
     }, []);
@@ -41,7 +41,7 @@ const MyProgress = () => {
                 const jsonValue = JSON.stringify(photos);
                 await AsyncStorage.setItem('@photos', jsonValue);
             } catch (e) {
-                console.error('Fehler beim Speichern der Fotos im AsyncStorage', e);
+                console.error('Error saving photos to storage', e);
             }
         };
 
@@ -65,7 +65,7 @@ const MyProgress = () => {
                 setPhotos([...photos, newPhoto]);
             }
         } catch (error) {
-            Alert.alert('Fehler', 'Konnte kein Foto machen: ' + (error as Error).message);
+            Alert.alert('Error', 'Could not make a photo ' + (error as Error).message);
         }
     };
 
@@ -80,7 +80,7 @@ const MyProgress = () => {
             const jsonValue = JSON.stringify(updatedPhotos);
             await AsyncStorage.setItem('@photos', jsonValue);
         } catch (e) {
-            console.error('Fehler beim Aktualisieren der Fotos im AsyncStorage nach dem Löschen', e);
+            console.error('Error updating photos in AsyncStorage after deletion', e);
         }
     };
 
@@ -92,13 +92,13 @@ const MyProgress = () => {
             style={styles.fullScreen}
         >
             <ScrollView contentContainerStyle={styles.container}>
-                <Text style={styles.text}>Mein Fortschritt</Text>
-                <Text style={styles.text1}>Hier kannst du deinen Fortschritt dokumentieren!</Text>
-                <Text style={styles.text1}>Schieße gleich ein Bild!</Text>
+                <Text style={styles.text}>My progress</Text>
+                <Text style={styles.text1}>You can document your progress here!</Text>
+                <Text style={styles.text1}>Take a photo now!</Text>
 
                 <TouchableOpacity style={styles.button} onPress={takePhoto}>
                     <Ionicons name="camera" size={24} color="white" />
-                    <Text style={styles.buttonText}>Foto machen</Text>
+                    <Text style={styles.buttonText}>Take a pic</Text>
                 </TouchableOpacity>
 
                 {photos.map((photo, index) => (

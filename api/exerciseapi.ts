@@ -1,4 +1,4 @@
-import { Exercise } from '../types/exercise';
+import { Exercise } from '@/types/exercise';
 
 const EXERCISES_URL = 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/dist/exercises.json';
 const IMAGE_BASE_URL = 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/dist/exercises/';
@@ -16,6 +16,5 @@ export const fetchExercises = async (): Promise<Exercise[]> => {
         imageUrl: `${IMAGE_BASE_URL}${exercise.imageUrl}`
     }));
 
-    console.log('Fetched exercises with image URLs:', exercisesWithImageUrls);
     return exercisesWithImageUrls;
 };

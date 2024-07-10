@@ -4,8 +4,9 @@ import { Exercise } from '../types/exercise';
 import {Formik} from "formik";
 import * as Yup from "yup";
 import {useLocalSearchParams} from "expo-router";
-import FlatButton from './button.tsx';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import FlatButton from "@/components/button";
 
 const IMAGE_BASE_URL = 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/';
 
