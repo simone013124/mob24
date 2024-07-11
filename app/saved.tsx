@@ -31,7 +31,7 @@ const Saved: React.FC = () => {
                 await fetchExercises();
                 setLoading(false);
             } catch (error) {
-                setError(error);
+                //setError(error);
                 setLoading(false);
             }
         };
@@ -111,6 +111,11 @@ const Saved: React.FC = () => {
                                 <FlatButton
                                     text='Unlike'
                                     onPress={() => removeLikedWorkout(item)}
+                                />
+
+                                <FlatButton
+                                    text="Details"
+                                    onPress={() => setSelectedExercise(item)}
                                 />
                             </View>
                         </TouchableOpacity>

@@ -8,7 +8,7 @@ export default function HomeScreen() {
 
     // State for storing the quote
     const [quote, setQuote] = useState<Quote | null>(null);
-    //state for loading the quote
+    //state for loading the quote - shows if the quote is loading
     const [loading, setLoading] = useState(true);
 
     // Fetch a random quote from the API
@@ -29,17 +29,17 @@ export default function HomeScreen() {
         fetchRandomQuote();
     }, []);
 
+    // Display a background image with a title and a quote
+    // Display a loading indicator while fetching the quote
+    // Display the quote content and author
     return (
-        // Display a background image with a title and a quote
         <ImageBackground source={require('../assets/images/fitness.jpg')} style={styles.backgroundImage}>
             <View style={styles.container}>
                 <Text style={styles.title}>Welcome, Johannes!</Text>
                 <View style={styles.quoteContainer}>
                     {loading ? (
-                        // Display a loading indicator while fetching the quote
                         <ActivityIndicator size="large" color="#fff" />
                     ) : (
-                        // Display the quote content and author
                         <Text style={styles.quote}>"{quote?.content}" - {quote?.author}</Text>
                     )}
                 </View>
@@ -60,7 +60,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background for better readability
     },
     title: {
         fontSize: 32,

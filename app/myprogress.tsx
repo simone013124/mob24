@@ -14,10 +14,11 @@ type Photo = {
 // MyProgress component
 const MyProgress = () => {
 
-    // State for storing the photos
+    // State for storing the photos, empty array as initial value
     const [photos, setPhotos] = useState<Photo[]>([]);
 
     // Fetch the photos from storage when the component mounts
+    // and ask for camera permissions
     useEffect(() => {
         (async () => {
             if (Platform.OS !== 'web') {
@@ -27,7 +28,7 @@ const MyProgress = () => {
                 }
             }
 
-            // Laden der gespeicherten Fotos aus AsyncStorage
+            // loading saved photos from AsyncStorage
             try {
                 const jsonValue = await AsyncStorage.getItem('@photos');
                 if (jsonValue != null) {
@@ -40,7 +41,7 @@ const MyProgress = () => {
     }, []);
 
     useEffect(() => {
-        // Speichern der Fotos im AsyncStorage, wenn sich `photos` ändert
+        // saving photos to AsyncStorage when the photos state changes
         const savePhotos = async () => {
             try {
                 const jsonValue = JSON.stringify(photos);
@@ -53,8 +54,10 @@ const MyProgress = () => {
         savePhotos();
     }, [photos]);
 
+    // function to take a photo
     const takePhoto = async () => {
         try {
+            // open camera and take a photo
             const result = await ImagePicker.launchCameraAsync({
                 mediaTypes: ImagePicker.MediaTypeOptions.Images,
                 allowsEditing: true,
@@ -62,11 +65,15 @@ const MyProgress = () => {
                 quality: 1,
             });
 
+            // if the user did not cancel and a photo was taken
             if (!result.canceled && result.assets && result.assets.length > 0) {
+
+                // create a new photo object with the uri and the current date
                 const newPhoto: Photo = {
                     uri: result.assets[0].uri,
-                    date: new Date().toLocaleString(), // Aktuelles Datum und Zeit
+                    date: new Date().toLocaleString(),
                 };
+                // add the new photo to the photos array
                 setPhotos([...photos, newPhoto]);
             }
         } catch (error) {
@@ -74,6 +81,7 @@ const MyProgress = () => {
         }
     };
 
+    // function to delete a photo
     const deletePhoto = async (index: number) => {
         // Kopie der Fotos erstellen, um das gelöschte Foto zu entfernen
         const updatedPhotos = [...photos];

@@ -49,6 +49,7 @@ export default function RootLayout() {
     // Kontext-Provider, die den Zustand der Anwendung verwalten und
     // an die darunterliegenden Komponenten weitergeben
     // stellen sicher, dass bestimmte Daten global verfügbar sind
+
     return (
         <LikedWorkoutsProvider>
             <WorkoutsProvider>

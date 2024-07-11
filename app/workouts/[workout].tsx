@@ -28,6 +28,7 @@ export default function WorkoutDetail() {
     }
 
 
+    // wenn workout exercises enthält, diese anzeigen mit map und für jede exercise ein View erstellen
     return (
         <ScrollView>
             <Card>
