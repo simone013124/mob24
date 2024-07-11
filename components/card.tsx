@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
+// This component is a styled card that can be used to wrap other components
 const Card = ({ children }) => {
     return (
         <LinearGradient

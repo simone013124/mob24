@@ -4,13 +4,18 @@ import {useState} from "react";
 import Card from '../../components/card';
 
 
+//define the type for the category object
 export type Category = {
     title: string,
     key: string
 }
 
+// ExercisePage component
 export default function ExercisePage() {
-    // auch ein state, dass wenn man es abändert, die Kategorienliste neu gerendert wird
+
+    const [modalOpen, setModalOpen] = useState(false);
+
+    // State for storing the categories
     const [categories, setCategories] = useState<Category[]>([
         { title: 'beginner', key: '1' },
         { title: 'intermediate', key: '2' },
@@ -22,6 +27,18 @@ export default function ExercisePage() {
     // auf klicken wird die key an die url angehängt und eine detailseite geöffnet [category].tsx
     return (
         <View>
+            <Modal visible={modalOpen} animationType='slide'>
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                    <View style={styles.modalContent}>
+                        <MaterialIcons
+                            name='close'
+                            size={24}
+                            style={{...styles.modalToggle, ...styles.modalClose}}
+                            onPress={() => setModalOpen(false)}
+                        />
+                    </View>
+                </TouchableWithoutFeedback>
+            </Modal>
             <FlatList data={categories} renderItem={({ item }) => (
                 <Pressable onPress={() => router.push({pathname:item.key, params:item})}>
                     <Card>

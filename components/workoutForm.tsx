@@ -1,15 +1,15 @@
-import { Button, TextInput, View, Text } from 'react-native';
+import { Button, TextInput, View, Text, StyleSheet } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import FlatButton from './button';
 import { Workout } from '@/types/workout';
 
-
-
+// Define the type for the WorkoutFormProps
 type WorkoutFormProps = {
     addWorkout: (workout: Workout) => void;
 };
 
+// Define the schema for the workout
 const workoutSchema = yup.object({
     title: yup.string()
         .required()
@@ -19,6 +19,7 @@ const workoutSchema = yup.object({
         .min(8),
 });
 
+// WorkoutForm component
 export default function WorkoutForm(props: WorkoutFormProps) {
     // @ts-ignore
     // @ts-ignore
@@ -33,12 +34,14 @@ export default function WorkoutForm(props: WorkoutFormProps) {
                 }}
             >
                 {(props) => (
-                    <View>
+                    <View style={styles.container}>
                         <TextInput
 
                             placeholder='Workout Title'
+                            placeholderTextColor='#888'
                             onChangeText={props.handleChange('title')}
                             value={props.values.title}
+                            style={styles.input}
                         />
                         <Text >{props.touched.title && props.errors.title}</Text>
 
@@ -46,8 +49,10 @@ export default function WorkoutForm(props: WorkoutFormProps) {
 
                             multiline
                             placeholder='Description'
+                            placeholderTextColor='#888'
                             onChangeText={props.handleChange('description')}
                             value={props.values.description}
+                            style={styles.input}
                         />
                         <Text >{props.touched.description && props.errors.description}</Text>
                         <FlatButton onPress={props.handleSubmit} text='Submit' />
@@ -57,3 +62,14 @@ export default function WorkoutForm(props: WorkoutFormProps) {
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        margin: 16, // Seitenabstand rundherum
+        padding: 16, // Optional: Innenabstand innerhalb der View
+        marginTop: 30,
+    },
+    input: {
+        marginBottom: 12, // Optional: Abstand zwischen den TextInputs
+    },
+});

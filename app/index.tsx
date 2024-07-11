@@ -3,15 +3,22 @@ import { StyleSheet, View, Text, ImageBackground, ActivityIndicator } from 'reac
 import { Quote } from '@/types/quote';
 import { fetchQuote } from '@/api/quoteapi';
 
+// Home screen component
 export default function HomeScreen() {
+
+    // State for storing the quote
     const [quote, setQuote] = useState<Quote | null>(null);
+    //state for loading the quote
     const [loading, setLoading] = useState(true);
 
+    // Fetch a random quote from the API
     useEffect(() => {
         const fetchRandomQuote = async () => {
             try {
                 const data = await fetchQuote();
+                // Set the quote in state
                 setQuote(data);
+                // Set loading to false
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching quote:', error);
@@ -23,13 +30,16 @@ export default function HomeScreen() {
     }, []);
 
     return (
+        // Display a background image with a title and a quote
         <ImageBackground source={require('../assets/images/fitness.jpg')} style={styles.backgroundImage}>
             <View style={styles.container}>
                 <Text style={styles.title}>Welcome, Johannes!</Text>
                 <View style={styles.quoteContainer}>
                     {loading ? (
+                        // Display a loading indicator while fetching the quote
                         <ActivityIndicator size="large" color="#fff" />
                     ) : (
+                        // Display the quote content and author
                         <Text style={styles.quote}>"{quote?.content}" - {quote?.author}</Text>
                     )}
                 </View>

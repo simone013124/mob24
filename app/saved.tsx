@@ -5,18 +5,26 @@ import { Exercise } from '@/types/exercise';
 import styles from '../styles/exercise';
 import ExerciseDetail from '../components/ExerciseDetail';
 import { LinearGradient } from 'expo-linear-gradient';
-
 import { fetchExercises } from '@/api/exerciseapi';
 import FlatButton from "@/components/button";
 
 const IMAGE_BASE_URL = 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/';
 
+// Saved screen component
+// This component displays a list of liked workouts
+
 const Saved: React.FC = () => {
+
+    // Get the liked workouts and functions to add/remove liked workouts from the context
     const { likedWorkouts, addLikedWorkout, removeLikedWorkout } = useLikedWorkouts();
+    // State for storing the selected exercise
     const [selectedExercise, setSelectedExercise] = useState<Exercise | null>(null);
+    // State for loading state
     const [loading, setLoading] = useState(true);
+    // State for error state
     const [error, setError] = useState<Error | null>(null);
 
+    // Fetch exercises when the component mounts
     useEffect(() => {
         const getExercises = async () => {
             try {
@@ -31,6 +39,7 @@ const Saved: React.FC = () => {
         getExercises();
     }, []);
 
+    // Display a loading indicator while fetching the exercises
     if (loading) {
         return (
             <View style={[styles.container, styles.center]}>
@@ -39,6 +48,7 @@ const Saved: React.FC = () => {
         );
     }
 
+    // Display an error message if the exercises could not be loaded
     if (error) {
         return (
             <View style={[styles.container, styles.center]}>
@@ -47,6 +57,7 @@ const Saved: React.FC = () => {
         );
     }
 
+    // Display a message if no liked workouts are available
     if (likedWorkouts.length === 0) {
         return (
             <LinearGradient
@@ -62,10 +73,15 @@ const Saved: React.FC = () => {
         );
     }
 
+    // Display the list of liked workouts
     if (selectedExercise) {
+
+        // Display the selected exercise in detail
+        // Pass the exercise and a function to go back to the list of liked workouts
         return <ExerciseDetail exercise={selectedExercise} onBack={() => setSelectedExercise(null)} />;
     }
 
+    // Display the list of liked workouts
     return (
         <LinearGradient
             colors={['#d2a9d2', '#e7e4e4', '#a9c6d2']}
@@ -73,6 +89,7 @@ const Saved: React.FC = () => {
             end={{ x: 1, y: 1 }}
             style={customStyles.fullScreen}
         >
+
             <FlatList
                 data={likedWorkouts}
                 keyExtractor={(item) => item.id.toString()}

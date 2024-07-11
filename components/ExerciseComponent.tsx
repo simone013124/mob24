@@ -9,16 +9,29 @@ import ExerciseDetail from './ExerciseDetail';
 import { useWorkouts } from '@/context/WorkoutsContext';
 import FlatButton from "@/components/button";
 
-const ExerciseComponent: React.FC<{ level: string }> = ({ level }) => {
-    const [exercises, setExercises] = useState<Exercise[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<Error | null>(null);
-    const { likedWorkouts, addLikedWorkout, removeLikedWorkout } = useLikedWorkouts();
-    const { workouts, addExerciseToWorkout } = useWorkouts(); // Verwende useWorkouts aus dem WorkoutsContext
-    const [selectedExercise, setSelectedExercise] = useState<Exercise | null>(null);
-    const [selectedWorkout, setSelectedWorkout] = useState<string | null>(null); // State für ausgewähltes Workout im Dropdown-Menü
-    const [open, setOpen] = useState(false); // State für das Öffnen/Schließen des Dropdown-Menüs
 
+// ExerciseComponent component
+// This component displays a list of exercises filtered by level
+const ExerciseComponent: React.FC<{ level: string }> = ({ level }) => {
+
+    // State for storing the exercises
+    const [exercises, setExercises] = useState<Exercise[]>([]);
+    // State for loading state
+    const [loading, setLoading] = useState(true);
+    // State for error state
+    const [error, setError] = useState<Error | null>(null);
+    // Get the liked workouts and functions to add/remove liked workouts from the context
+    const { likedWorkouts, addLikedWorkout, removeLikedWorkout } = useLikedWorkouts();
+    // Get the workouts and function to add exercises to a workout from the context
+    const { workouts, addExerciseToWorkout } = useWorkouts();
+    // State for storing the selected exercise
+    const [selectedExercise, setSelectedExercise] = useState<Exercise | null>(null);
+    // State for storing the selected workout in the dropdown
+    const [selectedWorkout, setSelectedWorkout] = useState<string | null>(null);
+    // State for open and close the dropdown
+    const [open, setOpen] = useState(false);
+
+    // Fetch exercises when the component mounts
     useEffect(() => {
         const getExercises = async () => {
             try {
@@ -29,7 +42,6 @@ const ExerciseComponent: React.FC<{ level: string }> = ({ level }) => {
                 setLoading(false);
             }
         };
-
         getExercises();
     }, []);
 
@@ -49,12 +61,15 @@ const ExerciseComponent: React.FC<{ level: string }> = ({ level }) => {
         );
     }
 
+    // If an exercise is selected, display the ExerciseDetail component
     if (selectedExercise) {
         return <ExerciseDetail exercise={selectedExercise} onBack={() => setSelectedExercise(null)} />;
     }
 
+    // Filter the exercises by level
     const filteredExercises = exercises.filter(exercise => exercise.level === level);
 
+    // Function to add an exercise to a workout
     const handleAddToWorkout = (item: Exercise) => {
         if (selectedWorkout) {
             // Check if the workout already contains this exercise ID
@@ -69,10 +84,7 @@ const ExerciseComponent: React.FC<{ level: string }> = ({ level }) => {
         }
     };
 
-
-
-
-
+    // Display the list of exercises
     return (
         <FlatList
             data={filteredExercises}
@@ -82,6 +94,7 @@ const ExerciseComponent: React.FC<{ level: string }> = ({ level }) => {
                     <Text style={styles.exerciseName}>{item.name}</Text>
                     <Text style={styles.exerciseDetailLabel}>Force: <Text style={styles.exerciseDetail}>{item.force}</Text></Text>
                     <Text style={styles.exerciseDetailLabel}>Level: <Text style={styles.exerciseDetail}>{item.level}</Text></Text>
+
 
                     <DropDownPicker
                         items={workouts.map(workout => ({ label: workout.title, value: workout.id }))}
@@ -93,10 +106,12 @@ const ExerciseComponent: React.FC<{ level: string }> = ({ level }) => {
                         onChangeValue={(value) => setSelectedWorkout(value)}
                     />
 
+
                     <FlatButton
                         text="Add to Workout"
                         onPress={() => handleAddToWorkout(item)}
                     />
+
 
                     <FlatButton
                         text={likedWorkouts.some(w => w.id === item.id) ? 'Unlike' : 'Like'}
@@ -113,6 +128,10 @@ const ExerciseComponent: React.FC<{ level: string }> = ({ level }) => {
             )}
         />
     );
+
+
 };
+
+
 
 export default ExerciseComponent;

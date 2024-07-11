@@ -5,14 +5,19 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+//defining the type for the photo object
 type Photo = {
     uri: string;
     date: string;
 };
 
+// MyProgress component
 const MyProgress = () => {
+
+    // State for storing the photos
     const [photos, setPhotos] = useState<Photo[]>([]);
 
+    // Fetch the photos from storage when the component mounts
     useEffect(() => {
         (async () => {
             if (Platform.OS !== 'web') {

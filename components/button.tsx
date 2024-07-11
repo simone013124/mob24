@@ -1,9 +1,12 @@
 import { StyleSheet, TouchableOpacity, Text, View } from 'react-native';
 
+// define the type for the FlatButtonProps
 type FlatButtonProps = {
     text: string,
     onPress: () => void
 }
+
+// FlatButton component
 export default function FlatButton(props:FlatButtonProps){
     return (
         <TouchableOpacity onPress={props.onPress}>
