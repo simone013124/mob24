@@ -1,25 +1,24 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, ScrollView } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import { useLocalSearchParams } from "expo-router";
 import Card from "../../components/card";
 import ExerciseComponent from "@/components/ExerciseComponent";
 
 
+export default function CategoryDetail() {
 
-export default function CategoryDetail(props) {
-
-    let item = useLocalSearchParams();
+    // Hook von expo-router, der die aktuellen Suchparameter
+    // der Route abruft, gibt Objekt zurück, das die in der URL übergebenen Parameter enthält
+    let item = useLocalSearchParams() as { title: string };
 
     return (
-        <View contentContainerStyle={styles.fullScreen}>
-            <View contentContainerStyle={styles.container}>
+        <View style={styles.fullScreen}>
+            <View style={styles.container}>
             <Card>
                 <Text style={styles.text}>{item.title}</Text>
                 <View style={styles.rating}>
                     <ExerciseComponent level={item.title} />
                 </View>
             </Card>
-
             </View>
         </View>
     );
@@ -53,7 +52,6 @@ const styles = StyleSheet.create({
 
     fullScreen: {
         flexGrow: 1,
-
     },
 
     container: {

@@ -1,7 +1,6 @@
 import {StyleSheet, View, Text, Pressable, FlatList, Modal, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import {router} from "expo-router";
 import {useState} from "react";
-import {MaterialIcons} from "@expo/vector-icons";
 import Card from '../../components/card';
 
 
@@ -19,6 +18,8 @@ export default function ExercisePage() {
     ]);
 
 
+    // nimmt key von jedem item und rendert jedes item in liste
+    // auf klicken wird die key an die url angehängt und eine detailseite geöffnet [category].tsx
     return (
         <View>
             <FlatList data={categories} renderItem={({ item }) => (
@@ -54,7 +55,6 @@ const styles = StyleSheet.create({
     text:{
         fontSize: 18,
         fontWeight: 'bold',
-
     }
 
 });
