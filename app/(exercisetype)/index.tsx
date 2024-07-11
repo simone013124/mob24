@@ -11,7 +11,10 @@ export type Category = {
 }
 
 export default function ExercisePage() {
+    // ist ein State, der steuert, ob das Modal geöffnet oder geschlossen ist, zu Beginn geschlossen
     const [modalOpen, setModalOpen] = useState(false);
+
+    // auch ein state, dass wenn man es abändert, die Kategorienliste neu gerendert wird
     const [categories, setCategories] = useState<Category[]>([
         { title: 'beginner', key: '1' },
         { title: 'intermediate', key: '2' },
