@@ -1,4 +1,4 @@
-import { Quote } from '../types/quote';
+import { Quote } from '@/types/quote';
 
 const QUOTES_URL = 'https://api.quotable.io/random';
 
