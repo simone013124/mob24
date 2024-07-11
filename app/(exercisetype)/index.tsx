@@ -11,9 +11,6 @@ export type Category = {
 }
 
 export default function ExercisePage() {
-    // ist ein State, der steuert, ob das Modal geöffnet oder geschlossen ist, zu Beginn geschlossen
-    const [modalOpen, setModalOpen] = useState(false);
-
     // auch ein state, dass wenn man es abändert, die Kategorienliste neu gerendert wird
     const [categories, setCategories] = useState<Category[]>([
         { title: 'beginner', key: '1' },
@@ -24,18 +21,6 @@ export default function ExercisePage() {
 
     return (
         <View>
-            <Modal visible={modalOpen} animationType='slide'>
-                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                    <View style={styles.modalContent}>
-                        <MaterialIcons
-                            name='close'
-                            size={24}
-                            style={{...styles.modalToggle, ...styles.modalClose}}
-                            onPress={() => setModalOpen(false)}
-                        />
-                    </View>
-                </TouchableWithoutFeedback>
-            </Modal>
             <FlatList data={categories} renderItem={({ item }) => (
                 <Pressable onPress={() => router.push({pathname:item.key, params:item})}>
                     <Card>
