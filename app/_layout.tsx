@@ -1,3 +1,7 @@
+// definiert das grundlegende Layout der Anwendung und sorgt dafür,
+// dass bestimmte Elemente (Navigationsleisten z.B. Tabs) auf jeder Seite
+// beibehalten werden
+
 import React, { ReactNode, useEffect } from 'react';
 import { SplashScreen, Tabs } from 'expo-router';
 import { useFonts } from 'expo-font';
@@ -10,6 +14,7 @@ import { Entypo } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 
 // Verhindern, dass das Splashscreen automatisch ausgeblendet wird
+// Splash Screen = Ladebildschirm, damit nicht leer während fonts geladen
 SplashScreen.preventAutoHideAsync();
 
 // Typdefinition für die Props von WorkoutsProvider
@@ -40,6 +45,9 @@ export default function RootLayout() {
     }
 
 
+    // Kontext-Provider, die den Zustand der Anwendung verwalten und
+    // an die darunterliegenden Komponenten weitergeben
+    // stellen sicher, dass bestimmte Daten global verfügbar sind
     return (
         <LikedWorkoutsProvider>
             <WorkoutsProvider>
@@ -49,7 +57,7 @@ export default function RootLayout() {
     );
 }
 
-// TabsLayout-Komponente zur Definition der Tab-Navigation
+// TabsLayout-Komponente zur Definition der Tab-Navigation mit Icons
 function TabsLayout() {
     return (
         <Tabs
