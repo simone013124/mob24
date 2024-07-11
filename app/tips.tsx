@@ -3,10 +3,13 @@ import { View, Text, TouchableOpacity, FlatList, StyleSheet, ImageBackground, Sc
 import { FontAwesome } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 
-// Define the type for category IDs, add '4' for the new category
+// Define the type for category IDs
 type CategoryId = '1' | '2' | '3' | '4';
 
+// Tips screen component
 const Tips: React.FC = () => {
+
+    // State for storing the selected category
     const [selectedCategory, setSelectedCategory] = useState<CategoryId | null>(null);
 
     const categories = [
@@ -56,10 +59,12 @@ const Tips: React.FC = () => {
         ]
     };
 
+    // Function to handle category selection
     const handleCategoryPress = (categoryId: CategoryId) => {
         setSelectedCategory(categoryId);
     };
 
+    // Function to render the tips list
     const renderItem = ({ item }: { item: string }) => (
         <View style={styles.tipContainer}>
             <View style={styles.iconContainer}>
@@ -97,7 +102,8 @@ const Tips: React.FC = () => {
                                 ))}
                             </View>
                         </View>
-                    ) : (
+                    ) : // Display the tips for the selected category
+                        (
                         <View>
                             <TouchableOpacity onPress={() => setSelectedCategory(null)} style={styles.backButton}>
                                 <Text style={styles.backButtonText}>← Back to Categories</Text>

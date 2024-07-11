@@ -4,12 +4,12 @@ import * as yup from 'yup';
 import FlatButton from './button';
 import { Workout } from '@/types/workout';
 
-
-
+// Define the type for the WorkoutFormProps
 type WorkoutFormProps = {
     addWorkout: (workout: Workout) => void;
 };
 
+// Define the schema for the workout
 const workoutSchema = yup.object({
     title: yup.string()
         .required()
@@ -19,6 +19,7 @@ const workoutSchema = yup.object({
         .min(8),
 });
 
+// WorkoutForm component
 export default function WorkoutForm(props: WorkoutFormProps) {
     // @ts-ignore
     // @ts-ignore

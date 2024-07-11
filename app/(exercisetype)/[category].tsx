@@ -5,14 +5,13 @@ import Card from "../../components/card";
 import ExerciseComponent from "@/components/ExerciseComponent";
 
 
-
+// This is the component that will be displayed when the user navigates to the category detail screen
 export default function CategoryDetail(props) {
 
+    // Get the item from the local search params
     let item = useLocalSearchParams();
-
     return (
         <View contentContainerStyle={styles.fullScreen}>
-
             <Card>
                 <Text style={styles.text}>{item.title}</Text>
                 <View style={styles.rating}>

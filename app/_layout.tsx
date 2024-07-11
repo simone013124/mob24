@@ -17,6 +17,7 @@ interface ProviderProps {
     children: ReactNode;
 }
 
+// RootLayout-Komponente
 export default function RootLayout() {
     const [loaded, error] = useFonts({
         'nunito-regular': require('../assets/fonts/Nunito-Regular.ttf'),

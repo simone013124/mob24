@@ -6,17 +6,22 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Card from '../../components/card';
 import WorkoutForm from '../../components/workoutForm';
 
-
+//define the type for the workout object
 export type Workout = {
     id: string,
     title: string,
     description: string,
 }
 
+// WorkoutPage component
 export default function WorkoutPage() {
+
+    // State for storing the categories
     const [modalOpen, setModalOpen] = useState(false);
+    // State for storing the workouts
     const [workouts, setWorkouts] = useState<Workout[]>([]);
 
+    // Fetch the workouts from storage when the component mounts
     useEffect(() => {
         const loadWorkouts = async () => {
             try {
@@ -31,6 +36,7 @@ export default function WorkoutPage() {
         loadWorkouts();
     }, []);
 
+    // Save the workouts to storage when the workouts state changes
     useEffect(() => {
         const saveWorkouts = async () => {
             try {
@@ -42,6 +48,7 @@ export default function WorkoutPage() {
         saveWorkouts();
     }, [workouts]);
 
+    // Function to add a new workout
     const addWorkout = (workout: Workout) => {
         workout.id = Math.random().toString();
         setWorkouts((currentWorkouts) => {
@@ -49,6 +56,7 @@ export default function WorkoutPage() {
         });
         setModalOpen(false);
     };
+
 
     return (
         <View>

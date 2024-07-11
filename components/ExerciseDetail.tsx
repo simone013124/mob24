@@ -4,17 +4,18 @@ import { Exercise } from '@/types/exercise';
 import {Formik} from "formik";
 import * as Yup from "yup";
 import {useLocalSearchParams} from "expo-router";
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import FlatButton from "@/components/button";
 
 const IMAGE_BASE_URL = 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/';
 
+//interface for the props
 interface ExerciseDetailProps {
     exercise: Exercise;
     onBack: () => void;
 }
 
+// object schema for the form validation
 const exerciseSchema = Yup.object({
     repetitions: Yup.number()
         .required('Please enter the number of repetitions.')
@@ -22,16 +23,25 @@ const exerciseSchema = Yup.object({
         .integer('Please enter a valid & whole number.')
 });
 
+// ExerciseDetail component
+// React.FC is a generic type that allows us to define the type of the props passed to the component
 const ExerciseDetail: React.FC<ExerciseDetailProps> = ({ exercise, onBack }) => {
+
+    // State for storing the number of repetitions
     const [repetitions, setRepetitions] = useState<number | null>(null);
     const [currentIndex, setCurrentIndex] = useState(0);
-    const photos = exercise.images;  // Assuming `exercise.images` is an array of image paths
+    // Array of image paths
+    const photos = exercise.images;
 
+    // Load the number of repetitions from storage when the component mounts
     useEffect(() => {
         const loadRepetitions = async () => {
             try {
+                // Load the number of repetitions from storage
                 const savedRepetitions = await AsyncStorage.getItem(`@repetitions_${exercise.id}`);
+                // If the value is not null, set the repetitions state to the value
                 if (savedRepetitions !== null) {
+                    // Parse the value to an integer
                     setRepetitions(parseInt(savedRepetitions, 10));
                 }
             } catch (e) {
@@ -40,22 +50,28 @@ const ExerciseDetail: React.FC<ExerciseDetailProps> = ({ exercise, onBack }) => 
         };
 
         loadRepetitions();
+        //second argument is the dependency array, which means that the effect will only run when the exercise ID changes
     }, [exercise.id]);
 
+
+    // async function to save the number of repetitions to storage
     const saveRepetitions = async (reps: number) => {
         try {
+            // Save the number of repetitions to storage
+            // Use the exercise ID as the key
             await AsyncStorage.setItem(`@repetitions_${exercise.id}`, reps.toString());
         } catch (e) {
             console.error('Failed to save repetitions to storage', e);
         }
     };
 
-    // Store the first photo
+    // Get the first photo from the array of photo paths
     const firstPhoto = `${IMAGE_BASE_URL}${photos[0]}`;
     let item = useLocalSearchParams();
     return (
+        <View style={styles.container}>
         <ScrollView style={styles.fullScreen}>
-            <View style={styles.container}>
+
             <Text style={styles.exerciseName}>{exercise.name}</Text>
             <Image
                 source={{ uri: firstPhoto }}
@@ -106,8 +122,9 @@ const ExerciseDetail: React.FC<ExerciseDetailProps> = ({ exercise, onBack }) => 
                 )}
             </Formik>
             <FlatButton text="Back" onPress={onBack} />
-            </View>
         </ScrollView>
+        </View>
+
     );
 };
 

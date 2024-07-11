@@ -5,13 +5,18 @@ import {MaterialIcons} from "@expo/vector-icons";
 import Card from '../../components/card';
 
 
+//define the type for the category object
 export type Category = {
     title: string,
     key: string
 }
 
+// ExercisePage component
 export default function ExercisePage() {
+
     const [modalOpen, setModalOpen] = useState(false);
+
+    // State for storing the categories
     const [categories, setCategories] = useState<Category[]>([
         { title: 'beginner', key: '1' },
         { title: 'intermediate', key: '2' },
