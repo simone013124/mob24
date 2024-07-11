@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, FlatList, TouchableOpacity, Modal, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
+import { StyleSheet, View, Text, FlatList, TouchableOpacity, Modal, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { router } from "expo-router";
 import { MaterialIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -51,12 +51,15 @@ export default function WorkoutPage() {
     // Function to add a new workout
     const addWorkout = (workout: Workout) => {
         workout.id = Math.random().toString();
+        // setWorkouts wird verwendet, um den State workouts zu aktualisieren. Sie erhält
+        // eine Funktion als Argument, die den vorherigen State currentWorkouts verwendet
+        // currentWorkouts ist eine Funktion, die als Argument an setWorkouts übergeben wird,
+        // um den aktuellen Zustand der Workouts zu erhalten
         setWorkouts((currentWorkouts) => {
             return [workout, ...currentWorkouts];
         });
         setModalOpen(false);
     };
-
 
     return (
         <View>
@@ -95,6 +98,12 @@ export default function WorkoutPage() {
         </View>
     );
 }
+
+// renderItem ist eine Funktion, die für jedes Element in data aufgerufen wird
+// Sie erhält ein Objekt item, das das aktuelle Workout darstellt. Hier wird für
+// jedes Workout ein TouchableOpacity gerendert. Wenn der Benutzer darauf drückt,
+// wird die Methode router.push aufgerufen, um zur Seite "workouts/item.workoutName"
+// zu navigieren und das Workout als Parameter zu übergeben
 
 const styles = StyleSheet.create({
     modalToggle: {

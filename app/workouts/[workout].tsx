@@ -8,9 +8,13 @@ import Icon from 'react-native-vector-icons/Ionicons';
 export default function WorkoutDetail() {
     const route = useRoute();
     // @ts-ignore
+    // route.params enthält die Parameter, die beim Navigieren an diese Seite übergeben wurden
     const { id, title, description } = route.params;
-    const { workouts, removeExerciseFromWorkout } = useWorkouts(); // Entfernen Sie das Workout aus dem WorkoutsContext
 
+    // funktionen aus dem WorkoutsContext holen
+    const { workouts, removeExerciseFromWorkout } = useWorkouts();
+
+    // workout finden, das angezeigt werden soll
     const workout = workouts.find(workout => workout.id === id);
 
     const handleRemoveExercise = (exerciseId: string) => {
@@ -20,7 +24,7 @@ export default function WorkoutDetail() {
     };
 
     const handleRemoveWorkout = () => {
-       console.log("need to be done");
+       console.log("needs to be done");
     }
 
 

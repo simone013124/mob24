@@ -1,4 +1,4 @@
-import {StyleSheet, View, Text, Pressable, FlatList, Modal, TouchableWithoutFeedback, Keyboard} from 'react-native';
+import {StyleSheet, View, Text, Pressable, FlatList} from 'react-native';
 import {router} from "expo-router";
 import {useState} from "react";
 import Card from '../../components/card';
@@ -27,18 +27,6 @@ export default function ExercisePage() {
     // auf klicken wird die key an die url angehängt und eine detailseite geöffnet [category].tsx
     return (
         <View>
-            <Modal visible={modalOpen} animationType='slide'>
-                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                    <View style={styles.modalContent}>
-                        <MaterialIcons
-                            name='close'
-                            size={24}
-                            style={{...styles.modalToggle, ...styles.modalClose}}
-                            onPress={() => setModalOpen(false)}
-                        />
-                    </View>
-                </TouchableWithoutFeedback>
-            </Modal>
             <FlatList data={categories} renderItem={({ item }) => (
                 <Pressable onPress={() => router.push({pathname:item.key, params:item})}>
                     <Card>

@@ -1,5 +1,6 @@
 import {Stack} from "expo-router";
 
+// stack navigator for exercise layout - index and category
 export default function ExerciseLayout () {
     return (
         <Stack screenOptions={{

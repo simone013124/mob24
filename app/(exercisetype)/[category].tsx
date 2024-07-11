@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, ScrollView } from 'react-native';
+
+import { StyleSheet, View, Text } from 'react-native';
 import { useLocalSearchParams } from "expo-router";
 import Card from "../../components/card";
 import ExerciseComponent from "@/components/ExerciseComponent";
 
 
 // This is the component that will be displayed when the user navigates to the category detail screen
-export default function CategoryDetail(props) {
+export default function CategoryDetail() {
 
     // Get the item from the local search params
-    let item = useLocalSearchParams();
+    let item = useLocalSearchParams() as { title: string };
     return (
-        <View contentContainerStyle={styles.fullScreen}>
+        <View style={styles.fullScreen}>
             <Card>
                 <Text style={styles.text}>{item.title}</Text>
                 <View style={styles.rating}>
